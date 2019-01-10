@@ -50,3 +50,8 @@ html {
         font-size: 25px
     }
 }
+
+@font-face {
+    font-family: "Hz-Tz";
+    src: url("../assets/font/hz.otf") format("opentype");
+}

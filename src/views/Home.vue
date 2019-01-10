@@ -1,26 +1,22 @@
 <template>
     <div class="home-page">
         <!--<splash-page/>-->
-        <splash-page :visible="isShowSplash"/>
-        <title-animation/>
+        <splash-page :visible="isShowSplash" :remain-time="remainTime"/>
+
         <div class="home-content">
             <div class="content-wrap">
-                <!--<div style="color:red;font-size: large">-->
-                    <!--<div >{{showRegTipReg}}</div>-->
-                    <!--<div>{{showHadTipReg}}</div>-->
-                    <!--<div>{{showTip}}</div>-->
-                <!--</div>-->
-
                 <title-item v-for="(item ,index) in items"
                             :content="item.linkName" :src="item.linkName"
-                            :key="item.id" @click.native="handleItemClick(item)"/>
+                            :key="item.id" :title="titles[index].title"
+                            :tip="titles[index].tip"
+                            @click.native="handleItemClick(item)"/>
             </div>
         </div>
         <tip-dialog :visible.sync="showTip"/>
         <!--<tip-register-dialog :visible.sync="showTipReg"/>-->
         <input-info-tip-dialog :visible.sync="showRegTipReg"/>
         <had-invitation-dialog :visible.sync="showHadTipReg"/>
-
+        <input-invitation-code-dialog  :visible.sync="showTip"/>
     </div>
 </template>
 
@@ -37,11 +33,15 @@
     import HadInvitationDialog from "../components/HadInvitationDialog";
     import TitleAnimation from "../components/TitleAnimation";
     import TipCommonDialog from "../components/TipCommonDialog";
+    import InvitationCodeErrorDialog from "../components/InvitationCodeErrorDialog";
+    import InputInvitationCodeDialog from "../components/InputInvitationCodeDialog";
 
     const SPLASHTIME = 3000
     export default {
         name: "Home",
         components: {
+            InputInvitationCodeDialog,
+            InvitationCodeErrorDialog,
             TipCommonDialog,
             TitleAnimation,
             HadInvitationDialog, InputInfoTipDialog, TipRegisterDialog, TipDialog, TitleItem, SplashPage},
@@ -54,18 +54,19 @@
 
                 msg:"",
                 showCommonTip: false,
-                // items:[
-                //     {content:"大会简介" , src:"" },
-                //     {content:"会议议程" , src:""},
-                //     {content:"注册报名" , src:"" , path:"invitation-code"},
-                //     {content:"照片直播" , src:""},
-                //     {content:"视频直播" , src:""},
-                //     {content:"论坛地址" , src:""},
-                //     {content:"官网链接" , src:""},
-                //     {content:"官微链接" , src:""},
-                //     {content:"个人中心" , src:"" ,path:"person-center"},
-                // ],
-                showTip: false
+                titles:[
+                    {title:"大会简介" , tip:"General introduction" },
+                    {title:"会议议程" , tip:"Agenda of the Conference"},
+                    {title:"注册报名" , tip:"Registration" },
+                    {title:"照片直播" , tip:"Photo live broadcast"},
+                    {title:"视频直播" , tip:"Live video"},
+                    {title:"论坛地址" , tip:"Forum address"},
+                    {title:"官网链接" , tip:"Official website"},
+                    {title:"官微链接" , tip:"Official micro"},
+                    {title:"个人中心" , tip:"Personal Center"},
+                ],
+                showTip: false,
+                remainTime:3
             }
         },
         computed: {
@@ -145,14 +146,25 @@
                 }
 
             },
+            tick(){
+                this.remainTime--
+                if(this.remainTime <= 0){
+                    this.isShowSplash = false
+                    this.setLoaded()
+                    clearInterval(this.time)
+                }
+            },
             showSplash() {
                 if (!this.isLoaded) {
                     this.isShowSplash = true
-                    this.time = setTimeout(() => {
-                        this.isShowSplash = false
-                        this.setLoaded()
-                        clearTimeout(this.time)
-                    }, SPLASHTIME)
+                    this.remainTime = 3
+                    this.time = setInterval(this.tick , 1000)
+
+                    // this.time = setTimeout(() => {
+                    //     this.isShowSplash = false
+                    //     this.setLoaded()
+                    //     clearTimeout(this.time)
+                    // }, SPLASHTIME)
                 }
             },
             async init() {
@@ -164,6 +176,7 @@
                     }
 
                 } catch (e) {
+                    clearInterval(this.time)
                     console.log(e)
                 }
             }
@@ -173,7 +186,7 @@
         },
         beforeDestroy() {
             if (this.time) {
-                clearTimeout(this.time)
+                clearInterval(this.time)
             }
         }
     }
@@ -181,7 +194,7 @@
 
 <style scoped lang="less">
     .home-page {
-        background-image: url("../assets/home-bg.png");
+        background-image: url("../assets/view/home.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         height: 100%;
@@ -193,7 +206,7 @@
         .home-content {
             display: flex;
             justify-content: center;
-            margin-bottom: 100px;
+            margin-bottom: 4rem;
             background-image: url("../assets/home-border.png");
             background-size: 100% 100%;
             background-repeat: no-repeat;

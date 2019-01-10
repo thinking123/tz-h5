@@ -113,7 +113,7 @@
     @import "../css/common";
     @item-col: #0f6EB0;
     .page {
-        background-image: url("../assets/person-bg.png");
+        background-image: url("../assets/view/register.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         height: 100%;

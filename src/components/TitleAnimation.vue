@@ -67,8 +67,8 @@
         position: absolute;
         background-size: 100% 100%;
         background-repeat: no-repeat;
-        width: 3rem;
-        height: 3rem;
+        width: 5rem;
+        height: 5rem;
         margin: 5px;
         animation: bounce 3s infinite;
         animation-direction: alternate;

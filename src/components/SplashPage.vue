@@ -1,6 +1,8 @@
 <template>
     <div class="full" v-if="visible">
-
+        <span class="remain">
+            {{remainTime}}
+        </span>
     </div>
 </template>
 
@@ -11,7 +13,8 @@
             visible:{
                 type:Boolean,
                 default:false
-            }
+            },
+            remainTime:String
         }
     }
 </script>
@@ -30,5 +33,19 @@
     height: 100%;
     z-index: 100;
     background-color: aquamarine;
+
+    .remain{
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        z-index: 101;
+        height: 20px;
+        width: 20px;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #009FE8;
+    }
 }
 </style>

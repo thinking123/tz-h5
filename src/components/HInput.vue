@@ -74,6 +74,7 @@
         color: @white;
         font-weight: @font-weight;
         font-size: @font-size;
+
     }
 
     .input {

@@ -8,6 +8,10 @@ export const sites =  [
     {value: '兴化市', key: '6'},
     {value: '市直', key: '7'},
 ]
+
+export const titles = [
+    {title:'' , tip:''}
+]
 export function getSiteByKey(key) {
     if(key && key >= 0 && key <= 7){
         const site = sites.find(f=>f.key == key)
@@ -29,3 +33,4 @@ export function getOS() {
 
     return [isAndroid , isiOS]
 }
+

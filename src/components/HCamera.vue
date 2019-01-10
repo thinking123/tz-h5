@@ -58,8 +58,8 @@
 
 <style scoped lang="less">
     .wrap{
-        width: 5rem;
-        height: 5rem;
+        width: 7rem;
+        height: 7rem;
         display: flex;
         position: relative;
         input{
