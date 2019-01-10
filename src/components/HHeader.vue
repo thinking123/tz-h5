@@ -2,7 +2,9 @@
     <div class="wrap">
         <div @click="handleMusic" class="music">
             <div class="icon" :style="anim">
-
+                <audio ref="music" loop="loop" autoplay="autoplay">
+                    <source src="../assets/music.mp3" type="audio/mpeg" >
+                </audio>
             </div>
         </div>
     </div>
@@ -22,12 +24,29 @@
                 }
             }
         },
+        data(){
+            return{
+                img:require('../assets/music.mp3')
+            }
+
+        },
         methods: {
             ...mapMutations([
                 'setPlayMusic'
             ]),
             handleMusic() {
-                this.setPlayMusic(!this.playMusic)
+                try{
+                    const m = this.$refs.music
+                    this.setPlayMusic(!this.playMusic)
+                    this.playMusic ? m.play() : m.pause()
+                }catch (e) {
+                    console.log(e)
+                }
+
+            },
+            mounted(){
+                const m = this.$refs.music
+                this.playMusic ? m.play() : m.pause()
             }
         }
     }
@@ -54,14 +73,12 @@
             position: absolute;
             height: @width;
             width: @width;
-            border-radius: @width;
-            border: 2px solid @white;
             margin: 25px;
             right: 0;
             display: flex;
 
             .icon {
-                background-image: url(/img/music.385b83a3.png);
+                background-image: url("../assets/music.png");
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
                 /* position: relative; */
@@ -69,7 +86,6 @@
                 -ms-flex: 1;
                 flex: 1;
                 /* padding: 5px; */
-                border: 5px solid transparent;
             }
 
 

@@ -1,24 +1,37 @@
 <template>
     <div class="page">
-
-        <div class="content" v-if="user">
-            <div class="item">
-                电影券兑换码:{{user.movieCode }}
-            </div>
-            <div class="info">
-                <div class="info-title">
-                    电影券使用方法
-                </div>
-                <div class="site-info">
-                </div>
-            </div>
-            <div class="btn-group">
-                <h-button @click="handleReturn">
-                    返回首页
-                </h-button>
-            </div>
-
+        <title-animation top="70px"/>
+        <div class="item"  v-if="user">
+            电影券兑换码:{{user.movieCode }}
         </div>
+        <div class="content center" >
+
+            <img src="../assets/prize-content.png"/>
+        </div>
+        <h-button @click="handleReturn" class="center button">
+            返回首页
+        </h-button>
+
+
+
+        <!--<div class="content" v-if="user">-->
+            <!--<div class="item">-->
+                <!--电影券兑换码:{{user.movieCode }}-->
+            <!--</div>-->
+            <!--<div class="info">-->
+                <!--<div class="info-title">-->
+                    <!--电影券使用方法-->
+                <!--</div>-->
+                <!--<div class="site-info">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="btn-group">-->
+                <!--<h-button @click="handleReturn">-->
+                    <!--返回首页-->
+                <!--</h-button>-->
+            <!--</div>-->
+
+        <!--</div>-->
     </div>
 </template>
 
@@ -29,10 +42,11 @@
     import HSelecter from "../components/HSelecter";
     import {mapGetters, mapActions} from 'vuex'
     import {getSiteByKey} from "../utils/common";
+    import TitleAnimation from "../components/TitleAnimation";
 
     export default {
         name: "PrizePage",
-        components: { HButton},
+        components: {TitleAnimation, HButton},
         data() {
             return {}
         },
@@ -56,64 +70,38 @@
     @import "../css/common";
 
     .page {
-        background-image: url("../assets/home-bg.png");
-        background-size: contain;
+        background-image: url("../assets/prize-bg.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
         height: 100%;
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
 
-        .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /*justify-content: center;*/
-            margin: 0 50px 100px;
-
-
-            .item {
-                margin: 0 5px;
-                margin-bottom: 10px;
-                font-size: larger;
-                font-weight: bold;
-                color: white;
-            }
-
-            .info {
-                border: 1px solid @white;
-                display: flex;
-                flex-direction: column;
+        .center{
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .content{
+            overflow-y: auto;
+            width: 200px;
+            height: 120px;
+            bottom: 130px;
+            .img{
+                background-image: url("../assets/prize-content.png");
                 width: 100%;
-                height: 10rem;
-                position: relative;
-                align-items: center;
-                color: @white;
-
-                .info-title {
-                    border: 1px solid @white;
-                    position: absolute;
-                    top: -8px;
-                    background-color: #1D298E;
-                    width: 100px;
-
-                    text-align: center
-
-                }
             }
-
 
         }
 
-        .btn-group {
-            display: flex;
-            width: 100%;
-            margin-top: 20px;
-            justify-content: space-around;
-
-            & > * {
-                width: 9rem;
-            }
+        .item{
+            top:200px;
         }
+        .button{
+            bottom: 50px;
+        }
+
     }
 </style>

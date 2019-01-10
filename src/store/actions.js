@@ -2,9 +2,11 @@ import http from '../utils/http'
 import {SET_INVITATIONCODE ,SET_USER ,SET_LINKS} from "./mutations";
 
 const checkInvitationCode = async function checkInvitationCode({ commit },invitationCode) {
+    console.log('invitationCode' , invitationCode)
     const res = await http.checkInvitationCode({
         invitationCode
     })
+
 
     if(res == 1){
         commit(SET_INVITATIONCODE , invitationCode)
@@ -26,9 +28,9 @@ const register = async function register({ commit }, data) {
     // }
     return res
 }
-const getUser = async function getUser({ commit }, data) {
-    const res = await http.getUser(data)
-    if(res){
+const getUser = async function getUser({ commit }, openid) {
+    const res = await http.getUser({openid})
+    if(res && res.id){
         commit(SET_USER , res)
     }
     return res

@@ -10,4 +10,6 @@ export default {
     openid: state => state.openid,
     playMusic: state => state.playMusic,
     links: state => state.links,
+    isAndroid: state => state.isAndroid,
+    isIOS: state => state.isIOS,
 }

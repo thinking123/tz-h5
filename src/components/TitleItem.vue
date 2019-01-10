@@ -40,8 +40,8 @@
 
     .title-item{
 
-        height: 10rem;
-        width: 8.5rem;
+        height: 8rem;
+        width: 7rem;
         background-color: @item-bg;
         opacity: 0.8;
         display: flex;

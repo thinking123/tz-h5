@@ -47,6 +47,7 @@
     .content{
         background-image: url("../assets/bmcg.png");
         background-size: 100% 100%;
+        background-repeat: no-repeat;
         display: flex;
         justify-content: flex-end;
         flex-direction: column;

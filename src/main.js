@@ -5,6 +5,7 @@ import "./css/base.css"
 import App from './App.vue'
 import routes from './router'
 import store from './store'
+import {getOS} from "./utils/common";
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
@@ -15,6 +16,22 @@ const router = new VueRouter({
     routes
 })
 
+router.beforeEach((pageTo, pageFrom, next) => {
+    if (pageTo.path === '/') {
+
+        const [isAndroid , isIOS] = getOS()
+
+        let {openid} = pageTo.query
+        const pro = process.env.NODE_ENV === 'production'
+        // if(!pro){
+        //     openid = 123
+        // }
+        if(openid){
+            store.commit('setOpenId' , openid)
+        }
+    }
+    next()
+})
 
 new Vue({
     store,

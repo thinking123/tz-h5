@@ -28,5 +28,14 @@ export default {
     },
     setPlayMusic(state , playMusic){
         state.playMusic = playMusic
+    },
+    setOpenId(state , openid){
+        state.openid = openid
+    } ,
+    setAndroid(state , isAndroid){
+        state.isAndroid = isAndroid
+    },
+    setIOS(state , isIOS){
+        state.isIOS = isIOS
     }
 }

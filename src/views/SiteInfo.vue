@@ -11,7 +11,7 @@
         computed: {
             ...mapGetters(['user']),
             bg() {
-                if(this.user.userSeat){
+                if(this.user.userSeat || this.user.userSeat === 0){
                     const url = require(`../assets/sites/${this.user.userSeat}.jpg`)
                     return {backgroundImage: `url(${url})`}
                 }else{
@@ -28,7 +28,8 @@
 
     .page {
         /*background-image: url("../assets/sites/hl.jpg");*/
-        background-size: contain;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
         height: 100%;
         width: 100%;
         display: flex;

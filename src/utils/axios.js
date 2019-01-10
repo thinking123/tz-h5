@@ -11,7 +11,7 @@ axios.interceptors.request.use(
         timer.push(setTimeout(() => {
             store.commit('CHANGE_LOADING_BAR', true)
         }, 100))
-        config.headers['Content-type'] = 'application/json;chartset=utf-8'
+        // config.headers['Content-type'] = 'application/json;chartset=utf-8'
         return config;
     },
     err => {

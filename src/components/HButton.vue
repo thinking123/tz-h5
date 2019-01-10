@@ -6,7 +6,7 @@
         <div class="bd right">
 
         </div>
-        <button class="btn" @click="handleClick">
+        <button class="btn" @click="handleClick" :disabled="loading">
             <slot/>
         </button>
     </div>
@@ -14,14 +14,18 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     export default {
         name: "HButton",
         props: {
             content: String
         },
+        computed: {
+            ...mapGetters(['loading'])
+        },
         methods:{
-            handleClick(){
-                this.$emit('click')
+            handleClick(e){
+                this.$emit('click' , e)
             }
         }
     }
@@ -42,8 +46,8 @@
     }
 
     .wrap {
-        width: 6rem;
-        height: 1.7rem;
+        width: 10rem;
+        height: 3rem;
         position: relative;
 
         & > *{

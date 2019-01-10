@@ -59,7 +59,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 3000;
     .dialog-content{
         flex: 1;
         margin: 0 50px;
@@ -67,12 +67,13 @@
             display: flex;
             justify-content: flex-end;
             position: relative;
-            bottom: -20px;
             .dialog-btn{
                 background-image: url("../assets/dialog-x.png");
                 height: 3rem;
                 width: 3rem;
                 background-size: cover;
+                position: relative;
+                right: -2rem;
             }
         }
     }

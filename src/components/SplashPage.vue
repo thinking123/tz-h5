@@ -18,8 +18,9 @@
 
 <style scoped lang="less">
 .full{
-    background-image: url("../assets/home-bg.png");
-    background-size: contain;
+    background-image: url("../assets/splash-bg.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     height: 100%;
     width: 100%;
     position: fixed;

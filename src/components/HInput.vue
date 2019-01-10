@@ -13,14 +13,14 @@
 <script>
     export default {
         name: "HInput",
-        props:{
-            value:{
-                type:String,
-                default:''
+        props: {
+            value: {
+                type: String,
+                default: ''
             },
-            placeholder:String
+            placeholder: String
         },
-        computed:{
+        computed: {
             v: {
                 set(v) {
                     this.$emit('update:value', v)
@@ -30,8 +30,8 @@
                 }
             },
         },
-        methods:{
-            handleChange(e){
+        methods: {
+            handleChange(e) {
                 this.v = e.target.value
             }
         }
@@ -41,24 +41,26 @@
 <style lang="less" scoped>
     @import "../css/common";
 
-    @bd-gap:-3px;
+    @bd-gap: -3px;
     .left {
-        left:@bd-gap;
-        top:@bd-gap
+        left: @bd-gap;
+        top: @bd-gap
     }
 
     .right {
-        right:@bd-gap;
-        bottom:@bd-gap
+        right: @bd-gap;
+        bottom: @bd-gap
     }
 
     .wrap {
 
         position: relative !important;
         display: flex;
-        & > *{
+
+        & > * {
             position: absolute;
         }
+
         .bd {
             border: 1px solid @white;
 
@@ -66,21 +68,23 @@
             width: 100%;
         }
     }
+
     ::placeholder {
         opacity: 1;
         color: @white;
         font-weight: @font-weight;
         font-size: @font-size;
     }
-    .input{
+
+    .input {
         position: static;
         flex: 1;
         z-index: 2;
         border: none;
         margin: 0;
         outline: none;
-         background: transparent;
-        height: 2.5rem;
+        background: transparent;
+        height: 3rem;
         color: @white;
         font-weight: @font-weight;
         font-size: @font-size;

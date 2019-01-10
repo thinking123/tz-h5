@@ -17,3 +17,15 @@ export function getSiteByKey(key) {
     }
 
 }
+
+export function isObjEmpty(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object
+}
+
+export function getOS() {
+    const u = navigator.userAgent, app = navigator.appVersion;
+    const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+    const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+
+    return [isAndroid , isiOS]
+}
