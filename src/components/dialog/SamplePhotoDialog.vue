@@ -1,7 +1,10 @@
 <template>
     <base-dialog :visible.sync="showDialog">
 
-        <img src="../../assets/sample.jpg"/>
+        <div class="img-wrap">
+            <img src="../../assets/sample.jpg"/>
+        </div>
+
     </base-dialog>
 </template>
 
@@ -29,11 +32,12 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
 
     img{
         width: 100%;
         height: 100%;
+        transform: scale(1.2);
     }
+
 </style>

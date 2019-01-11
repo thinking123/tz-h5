@@ -1,5 +1,6 @@
 <template>
-    <div class="page" :style="bg">
+    <div class="page" :style="bg" >
+        <div class="cp" @click="handleClick"/>
     </div>
 </template>
 
@@ -19,13 +20,28 @@
                 }
 
             }
+        },
+        methods:{
+
+            handleClick(){
+                // console.log(back)
+                this.$router.back()
+            }
         }
     }
 </script>
 
 <style scoped lang="less">
     @import "../css/common";
-
+.cp{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
     .page {
         /*background-image: url("../assets/sites/hl.jpg");*/
         background-size: 100% 100%;
@@ -35,7 +51,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-
+        z-index: 200;
         .content {
 
         }

@@ -27,10 +27,11 @@ export function isObjEmpty(obj) {
 }
 
 export function getOS() {
+
     const u = navigator.userAgent, app = navigator.appVersion;
+
     const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
     const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-
     return [isAndroid , isiOS]
 }
 

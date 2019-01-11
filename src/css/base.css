@@ -53,5 +53,10 @@ html {
 
 @font-face {
     font-family: "Hz-Tz";
+    src: url("../assets/font/dialog.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Hz-Tz-Dialog";
     src: url("../assets/font/hz.otf") format("opentype");
 }

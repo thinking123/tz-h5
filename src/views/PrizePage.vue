@@ -1,38 +1,28 @@
 <template>
-    <div class="page">
-        <title-animation top="70px"/>
-        <div class="item"  v-if="user">
-            电影券兑换码:{{user.movieCode }}
+    <view-wrap title="我的奖品信息">
+        <div class="content">
+            <!--<div class="item" v-if="user">-->
+            <!--电影券兑换码:{{user.movieCode }}-->
+            <!--</div>-->
+            <div class="item">
+                电影券兑换码:{{user ? user.movieCode : '' }}
+            </div>
+            <h-card title="电影券使用方法" :footer="footer">
+                <img src="../assets/prize-text.png" class="text"/>
+                <div class="sample-page" @click="handleView">
+
+                    <img src="../assets/prize-content.png" class="img"/>
+                </div>
+            </h-card>
+            <h-button @click="handleReturn" class="button">
+                返回首页
+            </h-button>
         </div>
-        <div class="content center" >
 
-            <img src="../assets/prize-content.png"/>
-        </div>
-        <h-button @click="handleReturn" class="center button">
-            返回首页
-        </h-button>
-
-
-
-        <!--<div class="content" v-if="user">-->
-            <!--<div class="item">-->
-                <!--电影券兑换码:{{user.movieCode }}-->
-            <!--</div>-->
-            <!--<div class="info">-->
-                <!--<div class="info-title">-->
-                    <!--电影券使用方法-->
-                <!--</div>-->
-                <!--<div class="site-info">-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="btn-group">-->
-                <!--<h-button @click="handleReturn">-->
-                    <!--返回首页-->
-                <!--</h-button>-->
-            <!--</div>-->
-
-        <!--</div>-->
-    </div>
+        <view-dialog :visible.sync="showView">
+            <img src="../assets/prize-content.png" class="img" style="z-index: 3002" @touchstart="touch"/>
+        </view-dialog>
+    </view-wrap>
 </template>
 
 <script>
@@ -43,65 +33,92 @@
     import {mapGetters, mapActions} from 'vuex'
     import {getSiteByKey} from "../utils/common";
     import TitleAnimation from "../components/TitleAnimation";
+    import ViewWrap from "../components/ViewWrap";
+    import HCard from "../components/HCard";
+    import ViewDialog from "../components/dialog/ViewDialog";
 
     export default {
         name: "PrizePage",
-        components: {TitleAnimation, HButton},
+        components: {ViewDialog, HCard, ViewWrap, TitleAnimation, HButton},
         data() {
-            return {}
+            return {
+                showView: false
+            }
         },
         computed: {
-            ...mapGetters(['user'])
+            ...mapGetters(['user']),
+            footer() {
+                const f = '滑动可查看详细使用规则'
+                return `"${f}"`
+            },
         },
         methods: {
             ...mapActions([
                 'getUser',
             ]),
+            touch(e){
+                e.stopPropagation();
+            },
             handleReturn() {
                 this.$router.push({path: '/'})
+            },
+            handleView() {
+                this.showView = true
             }
         },
-        mounted() {
-        }
+
     }
 </script>
 
 <style scoped lang="less">
     @import "../css/common";
 
-    .page {
-        background-image: url("../assets/prize-bg.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 100%;
+
+    .content {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        align-items: center;
+        /*margin: 0 50px 60px;*/
+        width: 80%;
+        margin-bottom: 1.5rem;
 
-        .center{
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
+
+        .item {
+            margin: 0.2rem 0 1.5rem;
+            font-size: large;
+
+
         }
-        .content{
+
+        .text {
+            width: 100%;
+            height: 10rem;
+        }
+
+        .button {
+            font-family: Hz-Tz;
+            font-size: large;
+            margin-top: 1rem;
+            height: 3rem;
+            width: 10rem;
+
+            font-size: large;
+        }
+
+        .sample-page {
             overflow-y: auto;
-            width: 200px;
-            height: 120px;
-            bottom: 130px;
-            .img{
-                background-image: url("../assets/prize-content.png");
+            width: 100%;
+            height: 10rem;
+
+
+            .img {
+
                 width: 100%;
+                height: auto;
             }
 
         }
-
-        .item{
-            top:200px;
-        }
-        .button{
-            bottom: 50px;
-        }
-
     }
+
+
 </style>

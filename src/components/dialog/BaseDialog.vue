@@ -1,5 +1,8 @@
 <template>
-    <div v-if="showDialog" class="dialog" >
+    <div v-if="showDialog" class="dialog">
+        <div class="mask">
+
+        </div>
         <div class="dialog-content">
             <div class="dialog-title">
                 <span class="dialog-btn" @click="handleClose"/>
@@ -27,6 +30,10 @@
             mask:{
                 type:String,
                 default: '#333333'
+            }  ,
+            isShowMask:{
+                type:Boolean,
+                default: true
             }
         },
         computed:{
@@ -56,10 +63,31 @@
 
 <style scoped lang="less">
     @import "../../css/common";
+
+    .mask{
+        background-color: @black;
+        opacity: 0.9;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top:0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+    .title{
+        font-family: Hz-Tz;
+        font-size: x-large;
+        color:@white;
+
+    }
     .dialog{
         position: fixed;
         left: 0;
         right: 0;
+        bottom: 0;
+        top:0;
         width: 100%;
         height: 100%;
         display: flex;
@@ -70,6 +98,7 @@
             flex: 1;
             margin: 0 4.5rem;
             min-width: 100px;
+            z-index: 30001;
             .dialog-title{
                 display: flex;
                 justify-content: flex-end;
@@ -88,7 +117,7 @@
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
                 padding: 1rem;
-                .dialog{
+                .body{
                     background-color: @dialog-bg-t;
                     margin: 1rem;
                 }

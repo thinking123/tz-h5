@@ -1,63 +1,55 @@
-<template>
-    <div class="title-item"  @touchstart="handleTouchStart" @touchend="handleTouchEnd">
-        <div class="item-wrap">
-           <div class="title" :class="{'tranform':isTouching}">
-              <span v-for="s in title" class="word">
-                  {{s}}
-              </span>
-           </div>
-            <div class="line"/>
-            <span class="tip">
-                {{tip}}
-            </span>
+<!--<template>-->
+<!--<div>-->
 
-        </div>
-        <div class="outer-border"/>
-        <!--{{content}}-->
+<!--</div>-->
+<!--</template>-->
+<!--<script>-->
+<!--export default {name:TitleItem}-->
+<!--</script>-->
+
+<template>
+    <div class="title-item" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
+        <img :src="img" class="img" :class="{'tranform':isTouching}"/>
     </div>
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     export default {
         name: "TitleItem",
-        props:{
-            content:{
-                type:String,
-                default:"敬请期待"
-            },
-            src:{
-                type:String,
-                default: ''
-            },
-            title:{
-                type:String,
-                default:"敬请期待"
-            },
-            tip:{
-                type:String,
-                default:"thisdfsdf sdflkdsjflkdsjflkdsjflk"
+        props: {
+            index: {
+                type: Number,
+                default: 0
             },
         },
-        data(){
-          return {
-              isTouching:false
-          }
+        computed: {
+            img() {
+                let url
+
+                if (this.index == 7) {
+                    url = require(`../assets/home-btn/${this.index}.png`)
+                } else {
+                    url = require(`../assets/home-btn/${this.index}.jpg`)
+                }
+                return url
+            }
         },
-        // computed: {
-        //     bg() {
-        //         const url = require(`../assets/home/${this.content}.png`)
-        //         return {backgroundImage: `url(${url})`}
-        //     }
-        // },
-        methods:{
-            handleTouchStart(){
+        data() {
+            return {
+                isTouching: false
+            }
+        },
+        methods: {
+            handleTouchStart() {
                 this.isTouching = true
             },
-            handleTouchEnd(){
-                if(this.isTouching){
-                    this.time = setTimeout(()=>{
+            handleTouchEnd() {
+                if (this.isTouching) {
+                    this.time = setTimeout(() => {
                         this.isTouching = false
-                    } , 1000)
+                    }, 1000)
                 }
 
 
@@ -68,101 +60,56 @@
         }
     }
 </script>
-
 <style scoped lang="less">
-    @item-bg:#dbe2f6;
-    @item-border:#10379A;
 
-    @outer-p:90%;
-    @inner-p:70%;
-    @gap-h:-3px;
-    @gap-w:-7px;
+    @import "../css/common";
 
-    .tranform{
-        transform: rotate(360deg);
-    }
-    .title-item{
 
-        height: 8.5rem;
-        width: 7.5rem;
-        background-color: @item-bg;
-        opacity: 0.8;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .outer-border{
-            border:1px solid @item-border;
-            width: @outer-p;
-            height: @outer-p;
-            position: absolute;
-            left:50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+    @item-bg: #dbe2f6;
+    @item-border: #10379A;
+    @outer-p: 90%;
+    @inner-p: 70%;
+    @gap-h: 0px;
+    @gap-w: 0px;
+    @gap-h-d: 0px;
+    @gap-w-d: 0px;
+
+
+    .img {
+
+        transition: transform 0.5s;
+        @media screen and (max-width: 321px) {
+            width: 6.5rem;
+            height: 7.5rem;
         }
-        .item-wrap{
-            display: flex;
-            color:@item-border;
-            flex-direction: column;
-            width: @inner-p;
-            height: @inner-p;
-
-            position: absolute;
-            left:50%;
-            top: 50%;
-            transform: translate(-50%, -60%);
-            display: flex;
-            .title{
-                transition: transform 0.5s;
-                font-size:2rem;
-                display: grid;
-                grid-template-columns: 1fr 1fr ;
-                grid-template-rows: 1fr 1fr ;
-                grid-column-gap: 0;
-                justify-items: center;
-                align-items: center;
-
-                & > *{
-
-                    font-family: "Hz-Tz";
-                }
-                & >:nth-child(1){
-                    position: relative;
-                    right: @gap-h;
-                    bottom: @gap-w;
-                }
-                & >:nth-child(2){
-                    position: relative;
-                    left: @gap-h;
-                    bottom: @gap-w;
-                }
-                & >:nth-child(3){
-                    position: relative;
-                    right: @gap-h;
-                    top: @gap-w;
-                }
-                & >:nth-child(4){
-                    position: relative;
-                    top: @gap-w;
-                    left: @gap-h;
-                }
-            }
-            .line{
-                height: 0;
-                border:1px solid @item-border;
-            }
-            .tip{
-
-                white-space: nowrap;
-                font-size: xx-small;
-                text-align: center;
-                position: absolute;
-                left:50%;
-                transform: translate(-50%, 0)  scale(0.7);
-            }
-
-
+        @media screen and (min-width: 321px) and (max-width: 375px) {
+            width: 7.5rem;
+            height: 8.5rem;
         }
 
+        @media screen and (min-width: 376px) and (max-width: 414px) {
+            width: 7.5rem;
+            height: 8.5rem;
+        }
+
+
+        @media screen and (min-width: 414px) {
+            width: 7.5rem;
+            height: 8.5rem;
+        }
+
+
     }
+
+    .img-tran {
+        transform: skewY(20deg);
+    }
+
+
+    .tranform {
+        /*transform: rotate(360deg);*/
+        transform: skewY(20deg);
+    }
+
+
 </style>

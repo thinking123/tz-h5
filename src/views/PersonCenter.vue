@@ -1,34 +1,23 @@
 <template>
-    <div class="page">
-
+    <view-wrap title="我的信息">
         <div class="content" v-if="user">
-            <div class="icon" >
-                <img :src="user.userHead"/>
-            </div>
-            <div class="line">
-                <div class="item">
-                    姓名:{{user.userName}}
-                </div>
-                <div class="item">
-                    手机:{{user.userPhone}}
-                </div>
-            </div>
-            <div class="item">
-                公司:{{user.userCompany}}
-            </div>
-            <div class="info" @click="handleToZone">
-                <!--<div class="info-title">-->
-                    <!--我的座位信息-->
-                <!--</div>-->
-                <div class="site-info">
-                    <div class="site" :style="siteBg">
-                        <!--{{site}}-->
+            <img :src="user.userHead" class="icon"/>
+            <div class="item-wrap">
+                <div class="one-line">
+                    <div class="item">
+                        姓名:{{user.userName}}
+                    </div>
+                    <div class="item">
+                        手机:{{user.userPhone}}
                     </div>
                 </div>
-                <!--<div class="info-footer">-->
-                    <!--"点急可查看全场座位号"-->
-                <!--</div>-->
+                <div class="item">
+                    公司:{{user.userCompany}}
+                </div>
             </div>
+            <h-card title="我的座位信息" :footer="footer" @click.native="handleToZone">
+                <img :src="siteBg" class="img-str"/>
+            </h-card>
             <div class="btn-group">
                 <h-button @click="handlePrize">
                     我的奖品信息
@@ -40,8 +29,9 @@
 
         </div>
 
-        <tip-dialog :visible.sync="showTip"/>
-    </div>
+        <!--<tip-dialog :visible.sync="showTip"/>-->
+        <tip-dialog-ex  :visible.sync="showTip" title="敬请期待"/>
+    </view-wrap>
 </template>
 
 <script>
@@ -52,17 +42,25 @@
     import {mapGetters, mapActions} from 'vuex'
     import {getSiteByKey} from "../utils/common";
     import TipDialog from "../components/TipDialog";
+    import ViewWrap from "../components/ViewWrap";
+    import HCard from "../components/HCard";
+    import TipDialogEx from "../components/dialog/TipDialogEx";
 
     export default {
         name: "PersonCenter",
-        components: {TipDialog, HSelecter, HButton, HInput},
+        components: {TipDialogEx, HCard, ViewWrap, TipDialog, HSelecter, HButton, HInput},
         data() {
             return {
-                showTip: false
+                showTip: false,
+
             }
         },
         computed: {
             ...mapGetters(['user' , 'openid']),
+            footer(){
+                const f = '点击查看所在座位区'
+              return `"${f}"`
+            },
             site() {
                 if(this.user.userSeat){
                     return getSiteByKey(this.user.userSeat)
@@ -73,9 +71,8 @@
             siteBg() {
                 // const index = getSiteByKey(this.user.userSeat)
                 const url = require(`../assets/sites-sm/${this.user.userSeat}.png`)
-                return {
-                    'backgroundImage': `url(${url})`
-                }
+                console.log(url)
+                return url
             }
         },
         methods: {
@@ -112,102 +109,64 @@
 <style scoped lang="less">
     @import "../css/common";
     @item-col: #0f6EB0;
-    .page {
-        background-image: url("../assets/view/register.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 100%;
+    .content {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
-
-        .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /*justify-content: center;*/
-            margin: 0 50px 60px;
-
-            .icon{
-                width: 5rem;
-                height: 5rem;
-                border-radius: 1rem;
-                margin: 10px 0;
-                background-color: white;
-
-                & > img{
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 2rem;
-                }
-            }
-            & > * {
-
-            }
-
-            .line {
-                display: flex;
-
-                & > .item {
-                    display: inline;
-                }
-            }
-
-            .item {
-                margin: 0 5px;
-                margin-bottom: 10px;
-                font-size: larger;
-                font-weight: bold;
-                color: white;
-            }
-
-            .info {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                height: 10rem;
-                margin-top: 25px;
-                z-index: 2;
-                .info-title {
-                    border: 1px solid @white;
-                    position: absolute;
-                    top: -8px;
-                    background-color: #1D298E;
-                    width: 100px;
-
-                    text-align: center
-
-                }
-
-                .site-info {
-                    flex: 1;
-                    width: 95%;
-                    margin: 5px;
-                    height: 100%;
-                    align-items: center;
-                    justify-content: center;
-                    .site {
-                        margin: 20px 50px 40px;
-                        height: 70%;
-                        background-size: 100% 100%;
-                        background-repeat: no-repeat;
-                    }
-                }
-            }
-
+        align-items: center;
+        /*margin: 0 50px 60px;*/
+        width: 80%;
+        margin-bottom: 3rem;
+        .img-str{
+            width: 100%;
+            height: 100%;
+        }
+        .icon{
+            width: @camera;
+            height: @camera;
+            border-radius: @camera-r;
+            /*margin: 10px 0;*/
+            margin-bottom: 0.5rem;
+            background-color: white;
 
         }
 
-        .btn-group {
+        .one-line {
             display: flex;
-            width: 100%;
-            margin-top: 20px;
-            justify-content: space-around;
-
-            & > * {
-                width: 9rem;
+            align-self: start;
+            & > .item {
+                display: inline;
             }
+        }
+
+        .item-wrap{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+        }
+        .item {
+            margin: 0 5px;
+            margin-bottom: 10px;
+            font-size: larger;
+            font-weight: bold;
+            color: white;
+            align-self: start;
+        }
+
+
+
+
+    }
+
+    .btn-group {
+        display: flex;
+        width: 100%;
+        margin-top: 1.5rem;
+        justify-content: space-around;
+        font-family: Hz-Tz;
+        & > * {
+            width: 10rem;
+            font-size: larger;
         }
     }
 </style>

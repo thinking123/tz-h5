@@ -14,7 +14,7 @@
                 type:Boolean,
                 default:false
             },
-            remainTime:String
+            remainTime:Number
         }
     }
 </script>
@@ -32,7 +32,6 @@
     width: 100%;
     height: 100%;
     z-index: 100;
-    background-color: aquamarine;
 
     .remain{
         position: fixed;

@@ -1,7 +1,10 @@
 <template>
     <div class="page">
-        <input-invitation-code-dialog :visible.sync="showCode" @submit="handleSubmit"/>
-        <invitation-code-error-dialog :visible.sync="showErrorCode"/>
+        <!--<input-invitation-code-dialog :visible.sync="showCode" @submit="handleSubmit"/>-->
+        <input-invitation-code-dialog-ex  :visible.sync="showCode" @submit="handleSubmit"/>
+        <!--<invitation-code-error-dialog :visible.sync="showErrorCode"/>-->
+        <tip-dialog-ex :visible.sync="showErrorCode" title="您输入的邀请码有误请重新输入" :is-show-mask="true"/>
+        <!--<tip-line-dialog :visible.sync="show" title="您已报名成功" tip="请去个人中心查看您的报名信息"/>-->
     </div>
 </template>
 
@@ -11,14 +14,23 @@
     import {mapActions} from 'vuex'
     import InvitationCodeErrorDialog from "../components/InvitationCodeErrorDialog";
     import HadInvitationDialog from "../components/HadInvitationDialog";
+    import InputInvitationCodeDialogEx from "../components/dialog/InputInvitationCodeDialogEx";
+    import TipLineDialog from "../components/dialog/TipLineDialog";
+    import TipDialogEx from "../components/dialog/TipDialogEx";
 
     export default {
         name: "InvitationCode",
-        components: {HadInvitationDialog, InvitationCodeErrorDialog, InputInvitationCodeDialog},
+        components: {
+            TipDialogEx,
+            TipLineDialog,
+            InputInvitationCodeDialogEx,
+            HadInvitationDialog, InvitationCodeErrorDialog, InputInvitationCodeDialog},
         data() {
             return {
                 showCode: true,
-                showErrorCode: false
+                showErrorCode: false,
+
+
             }
         },
         watch: {

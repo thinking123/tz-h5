@@ -6,6 +6,9 @@
         <div class="bd right">
 
         </div>
+        <!--<div class="tran"></div>-->
+
+        <img class="tran" src="../assets/trangle.png"/>
         <select class="input"  @change="handleChange" :value="v.value" :placeholder="placeholder" >
             <!--<h-select-item :content="item.content" v-for="item in items" @click.native="handleItemClick(item)" :is-active="current && item.key == current.key"/>-->
             <option v-for="item in items" class="option" :key="item.value">
@@ -110,5 +113,37 @@
 
     .option{
         background-color: @dialog-bg;
+    }
+
+    .tran{
+        position: absolute;
+        width: 20px;
+        height: 10px;
+        top: 50%;
+        transform: translate(0, -50%);
+        right: 3px;
+    }
+    .tran-b{
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border: 2px solid white;
+        transform: rotate(90deg);
+        /* border-left: 20px solid transparent; */
+        /* border-right: 20px solid transparent; */
+        /* border-top: 20px solid white; */
+        top: 50%;
+        right: 3px;
+        border-top: none;
+        border-left: none;
+        transform: translate(0 , -50%) rotate(45deg);
+        background-color: @green;
+        z-index: 100;
+    }
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
     }
 </style>

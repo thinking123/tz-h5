@@ -1,43 +1,56 @@
 <template>
-    <div class="page">
-        <form class="content">
-            <div class="title-wrap">
-                <span class="line"></span>
-                <span class="title">
-                    注册报名
-                </span>
-                <span class="line"></span>
-            </div>
-            <div class="image">
-                <h-camera @change="handleCameraChange"/>
-                <div class="sample" @click="handleSample">
-                    示例
-                </div>
-            </div>
-            <div class="tip">
-                如您对所拍照片不满意，可以再次点击照片框进行重拍
-            </div>
-            <div class="form">
+    <view-wrap title="注册报名">
 
-                <h-input placeholder="姓名:" :value.sync="form.userName" class="input"/>
-                <h-input placeholder="手机:" :value.sync="form.userPhone" class="input"/>
-                <h-input placeholder="公司:" :value.sync="form.userCompany" class="input"/>
-                <h-selecter placeholder="座位区:" :value.sync="form.zone" :items="items"/>
-                <div class="btn">
-                    <h-button @click="handleSubmit">
-                        确认提交
-                    </h-button>
-                </div>
+        <div class="image">
+            <h-camera @change="handleCameraChange"/>
+            <div class="sample" @click="handleSample">
+                示例
             </div>
+        </div>
+        <div class="tip">
+            如您对所拍照片不满意，可以再次点击照片框进行重拍
+        </div>
+        <div class="form">
 
-        </form>
-        <div class="error" v-if="err">
+            <h-input placeholder="姓名:" :value.sync="form.userName" class="input"/>
+            <h-input placeholder="手机:" :value.sync="form.userPhone" class="input"/>
+            <h-input placeholder="公司:" :value.sync="form.userCompany" class="input"/>
+            <h-selecter placeholder="座位区:" :value.sync="form.zone" :items="items"/>
+            <div class="btn">
+                <h-button @click="handleSubmit">
+                    确认提交
+                </h-button>
+            </div>
+        </div>
+
+        <div class="error" v-if="err" slot="error">
             {{err}}
         </div>
-        <invitation-success-dialog :visible.sync="isOk"/>
-        <had-invitation-dialog :visible.sync="showHadCode" @return="handleReturn"/>
+
+        <tip-line-dialog title="恭喜您报名成功" tip="获得神秘的礼物一份请您与2019年1月23日在现场点击个人中心领取" :is-show-button="false"
+                         :visible.sync="isOk"/>
+        <tip-line-dialog title="您已报名成功" tip="请去个人中心查看您的报名信息" :visible.sync="showHadCode" @return="handleReturn"/>
+        <!--<invitation-success-dialog :visible.sync="isOk"/>-->
+        <!--<had-invitation-dialog :visible.sync="showHadCode" @return="handleReturn"/>-->
         <sample-photo-dialog :visible.sync="showSample"/>
-    </div>
+    </view-wrap>
+    <!--<div class="page">-->
+    <!--<form class="content">-->
+    <!--<div class="title-wrap">-->
+    <!--<span class="line"></span>-->
+    <!--<span class="title">-->
+    <!--注册报名-->
+    <!--</span>-->
+    <!--<span class="line"></span>-->
+    <!--</div>-->
+    <!---->
+
+    <!--</form>-->
+
+    <!--<invitation-success-dialog :visible.sync="isOk"/>-->
+    <!--<had-invitation-dialog :visible.sync="showHadCode" @return="handleReturn"/>-->
+    <!--<sample-photo-dialog :visible.sync="showSample"/>-->
+    <!--</div>-->
 </template>
 
 <script>
@@ -45,16 +58,21 @@
     import HInput from "../components/HInput";
     import HButton from "../components/HButton";
     import HSelecter from "../components/HSelecter";
-    import {mapGetters, mapActions} from 'vuex'
+    import {mapActions, mapGetters} from 'vuex'
     import InvitationSuccessDialog from "../components/InvitationSuccessDialog";
     import HadInvitationDialog from "../components/HadInvitationDialog";
     import HCamera from "../components/HCamera";
     import TitleAnimation from "../components/TitleAnimation";
     import SamplePhotoDialog from "../components/dialog/SamplePhotoDialog";
+    import ViewWrap from "../components/ViewWrap";
+    import TipLineDialog from "../components/dialog/TipLineDialog";
+    import $ from "jquery";
 
     export default {
         name: "Register",
         components: {
+            TipLineDialog,
+            ViewWrap,
             SamplePhotoDialog,
             TitleAnimation, HCamera, HadInvitationDialog, InvitationSuccessDialog, HSelecter, HButton, HInput
         },
@@ -86,12 +104,27 @@
             }
         },
         computed: {
-            ...mapGetters(['invitationCode', 'openid'])
+            ...mapGetters(['invitationCode', 'openid' , 'isAndroid'])
+        },
+        mounted() {
+            if(this.isAndroid){
+                this.bodyHeight = $('body').height();
+                $(window).resize(this.resize);
+            }
+
+        },
+        beforeDestroy(){
+            if(this.isAndroid){
+                $(window).off('resize' , this.resize)
+            }
         },
         methods: {
             ...mapActions([
                 'register',
             ]),
+            resize(){
+                $('body').height(this.bodyHeight);
+            },
             handleSample() {
                 this.showSample = true
             },
@@ -166,99 +199,62 @@
 </script>
 
 <style scoped lang="less">
-    .page {
-        background-image: url("../assets/view/register.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 100%;
+    .error {
+        color: red;
+        align-self: center;
+    }
+
+
+    .image {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
         color: white;
+        align-items: center;
+        /*margin-top: 50px !important;*/
+        margin-top: 5px;
 
-        .error {
-            color: red;
+        .sample {
+            font-family: Hz-Tz;
+            font-size: large;
+            z-index: 100;
         }
 
 
-        .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-image: url("../assets/home-border.png");
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
+    }
 
-            width: 80%;
-            margin-bottom: 1rem;
-            align-self: center;
+    .tip {
+        font-size: smaller;
+        margin-bottom: 1rem;
+        z-index: 100;
+    }
 
-            .title-wrap {
-                display: flex;
-                font-size: large;
-                font-weight: bolder;
-                color: white;
-                justify-content: center;
-                align-items: center;
-                font-family: Hz-Tz;
-                font-size: xx-large;
-                margin-top: 15px;
-                .line {
-                    height: 0;
-                    width: 3rem;
-                    border: 1px solid white;
-                }
+    .form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 85%;
 
-                .title {
-                    margin: 0 10px;
-                }
-            }
-
-            .image {
-                display: flex;
-                flex-direction: column;
-                color: white;
-                align-items: center;
-                /*margin-top: 50px !important;*/
-                margin-top: 5px;
-                .sample {
-                    font-family: Hz-Tz;
-                    font-size: x-large;
-                    z-index: 100;
-                }
-
-
-            }
-
-            .tip {
-                font-size: smaller;
-                margin-bottom: 1rem;
-                z-index: 100;
-            }
-
-            .form {
-                display: flex;
-                flex-direction: column;
-                align-items: stretch;
-                width: 85%;
-
-                & > * {
-                    flex: 1;
-                    margin-bottom: 1.1rem;
-                    font-size: x-large;
-                    font-weight: bolder;
-                }
-            }
-
-            .btn {
-
-                /*width: initial;*/
-                display: flex;
-                justify-content: center;
-            }
-
-
+        & > * {
+            flex: 1;
+            margin-bottom: 1.1rem;
+            font-size: x-large;
+            font-weight: bolder;
         }
     }
+
+    .btn {
+
+        /*width: initial;*/
+        display: flex;
+        justify-content: center;
+
+        > * {
+
+            height: 3rem;
+            width: 10rem;
+
+            font-size: large;
+        }
+    }
+
 </style>

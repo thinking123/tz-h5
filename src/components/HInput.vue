@@ -6,13 +6,20 @@
         <div class="bd right">
 
         </div>
-        <input class="input" @change="handleChange" :value="v" :placeholder="placeholder"/>
+
+        <input ref="input" class="input" @change="handleChange" :value="v" :placeholder="placeholder"
+              />
     </div>
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     export default {
         name: "HInput",
+        computed: {
+            ...mapGetters(['isAndroid'])
+        },
         props: {
             value: {
                 type: String,
@@ -90,4 +97,5 @@
         font-weight: @font-weight;
         font-size: @font-size;
     }
+
 </style>

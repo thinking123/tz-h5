@@ -30,9 +30,11 @@ const register = async function register({ commit }, data) {
 }
 const getUser = async function getUser({ commit }, openid) {
     const res = await http.getUser({openid})
-    if(res && res.id){
-        commit(SET_USER , res)
-    }
+    // if(res && res.id){
+    //     commit(SET_USER , res)
+    // }
+
+    commit(SET_USER , res && res.id ? res : null)
     return res
 }
 const getLink = async function getLink({ commit }, data) {

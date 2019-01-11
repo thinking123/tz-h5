@@ -21,6 +21,7 @@ export default {
         state.invitationCode = invitationCode
     },
     [SET_USER](state , user){
+        localStorage.setItem('user', JSON.stringify(user));
         state.user = user
     },
     [SET_LINKS](state , links){
@@ -30,6 +31,7 @@ export default {
         state.playMusic = playMusic
     },
     setOpenId(state , openid){
+        localStorage.setItem('openid', openid);
         state.openid = openid
     } ,
     setAndroid(state , isAndroid){

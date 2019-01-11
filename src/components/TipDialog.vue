@@ -41,11 +41,6 @@
                 default:false
             }
         },
-        watch:{
-            visible(v){
-                // alert(v)
-            }
-        },
         computed:{
             showDialog: {
                 set(v) {

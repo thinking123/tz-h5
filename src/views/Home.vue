@@ -9,14 +9,17 @@
                             :content="item.linkName" :src="item.linkName"
                             :key="item.id" :title="titles[index].title"
                             :tip="titles[index].tip"
+                            :index="index"
                             @click.native="handleItemClick(item)"/>
             </div>
         </div>
-        <tip-dialog :visible.sync="showTip"/>
-        <!--<tip-register-dialog :visible.sync="showTipReg"/>-->
-        <input-info-tip-dialog :visible.sync="showRegTipReg"/>
-        <had-invitation-dialog :visible.sync="showHadTipReg"/>
-        <input-invitation-code-dialog  :visible.sync="showTip"/>
+        <tip-dialog-ex  :visible.sync="showTip" title="敬请期待"/>
+        <tip-line-dialog :visible.sync="showRegTipReg" title="请先填写报名信息"  />
+        <tip-line-dialog :visible.sync="showHadTipReg" title="您已报名成功" tip="请去个人中心查看您的报名信息" :is-show-button="false"/>
+
+
+        <input-invitation-code-dialog-ex :visible.sync="showCode" @submit="handleSubmit"/>
+        <tip-dialog-ex :visible.sync="showErrorCode" title="您输入的邀请码有误请重新输入" :is-show-mask="true"/>
     </div>
 </template>
 
@@ -24,10 +27,9 @@
     /* eslint-disable */
     import SplashPage from '../components/SplashPage'
     import TitleItem from "../components/TitleItem";
-    import {mapGetters, mapMutations, mapActions} from 'vuex'
+    import {mapActions, mapGetters, mapMutations} from 'vuex'
     import TipDialog from "../components/TipDialog";
     import {getLink} from "../utils/http";
-    import {isObjEmpty} from "../utils/common";
     import TipRegisterDialog from "../components/TipRegisterDialog";
     import InputInfoTipDialog from "../components/InputInfoTipDialog";
     import HadInvitationDialog from "../components/HadInvitationDialog";
@@ -35,11 +37,17 @@
     import TipCommonDialog from "../components/TipCommonDialog";
     import InvitationCodeErrorDialog from "../components/InvitationCodeErrorDialog";
     import InputInvitationCodeDialog from "../components/InputInvitationCodeDialog";
+    import TipLineDialog from "../components/dialog/TipLineDialog";
+    import TipDialogEx from "../components/dialog/TipDialogEx";
+    import InputInvitationCodeDialogEx from "../components/dialog/InputInvitationCodeDialogEx";
 
     const SPLASHTIME = 3000
     export default {
         name: "Home",
         components: {
+            InputInvitationCodeDialogEx,
+            TipDialogEx,
+            TipLineDialog,
             InputInvitationCodeDialog,
             InvitationCodeErrorDialog,
             TipCommonDialog,
@@ -48,12 +56,13 @@
         data() {
             return {
                 isShowSplash: false,
-                showTipReg: false,
                 showRegTipReg: false,
                 showHadTipReg: false,
+                showTip: false,
+                remainTime:3,
 
-                msg:"",
-                showCommonTip: false,
+                showCode: false,
+                showErrorCode: false,
                 titles:[
                     {title:"大会简介" , tip:"General introduction" },
                     {title:"会议议程" , tip:"Agenda of the Conference"},
@@ -65,8 +74,7 @@
                     {title:"官微链接" , tip:"Official micro"},
                     {title:"个人中心" , tip:"Personal Center"},
                 ],
-                showTip: false,
-                remainTime:3
+
             }
         },
         computed: {
@@ -85,6 +93,9 @@
                 //     return a.sort > b.sort
                 // })
 
+                if(res.length == 0){
+                    return []
+                }
 
                 const reg = {
                     linkName: '注册报名',
@@ -112,12 +123,8 @@
                 'setLoaded'
             ]),
             ...mapActions([
-                'getUser', 'getLink'
+                'getUser', 'getLink' , 'checkInvitationCode'
             ]),
-            showCommon(msg){
-                this.msg = msg
-                this.showCommonTip = true
-            },
             handleItemClick(item) {
                 if (item.state == 1) {
                     if(item.path){
@@ -129,9 +136,12 @@
                             }
                         } else  if (item.path == 'invitation-code'){
                             if(this.user){
-                                this.showTip = true
+                                this.showHadTipReg = true
                             }else{
-                                this.$router.push({path: item.path})
+
+                                this.showCode = true
+                                return
+                                // this.$router.push({path: item.path})
                             }
                         }else {
                             this.$router.push({path: item.path})
@@ -150,7 +160,7 @@
                 this.remainTime--
                 if(this.remainTime <= 0){
                     this.isShowSplash = false
-                    this.setLoaded()
+                    this.setLoaded(true)
                     clearInterval(this.time)
                 }
             },
@@ -179,6 +189,18 @@
                     clearInterval(this.time)
                     console.log(e)
                 }
+            },
+            async handleSubmit(code) {
+                try {
+                    const c = await this.checkInvitationCode(code)
+                    if (c != 0) {
+                        this.$router.push({path: 'register'})
+                    } else {
+                        this.showErrorCode = true
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
             }
         },
         mounted() {
@@ -201,21 +223,35 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
         align-items: center;
+
         .home-content {
             display: flex;
             justify-content: center;
-            margin-bottom: 4rem;
+
             background-image: url("../assets/home-border.png");
             background-size: 100% 100%;
             background-repeat: no-repeat;
+            margin-top: 250px;
+            @media screen and (max-height: 667px) {
+                margin-top: 200px;
+            }
+
+            @media screen and (min-height: 667px) and (max-height: 736px){
+                margin-top: 250px;
+            }
+
+            @media screen and (min-height: 736px){
+                margin-top: 300px;
+            }
+
             .content-wrap {
                 display: grid;
                 grid-gap: 10px;
                 grid-template-columns: 1fr 1fr 1fr;
                 grid-template-rows: 1fr 1fr 1fr;
                 margin: 20px;
+                z-index: 20;
             }
         }
     }

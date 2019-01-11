@@ -46,7 +46,7 @@
     }
 
     .wrap {
-        width: 10rem;
+        width: 8rem;
         height: 3rem;
         position: relative;
 
@@ -63,8 +63,9 @@
             border: none;
             outline: none;
             color: @white;
-            font-weight: @font-weight;
-            font-size: @font-size;
+            font-size: inherit;
+            font-weight: inherit;
+            font-family: inherit;
         }
     }
 </style>
