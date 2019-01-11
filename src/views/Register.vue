@@ -12,10 +12,10 @@
         </div>
         <div class="form">
 
-            <h-input placeholder="姓名:" :value.sync="form.userName" class="input"/>
-            <h-input placeholder="手机:" :value.sync="form.userPhone" class="input"/>
-            <h-input placeholder="公司:" :value.sync="form.userCompany" class="input"/>
-            <h-selecter placeholder="座位区:" :value.sync="form.zone" :items="items"/>
+            <h-input placeholder="姓名:" :value.sync="form.userName" class="input" @hfocus="handleFocus"/>
+            <h-input placeholder="手机:" :value.sync="form.userPhone" class="input" @hfocus="handleFocus"/>
+            <h-input placeholder="公司:" :value.sync="form.userCompany" class="input" @hfocus="handleFocus"/>
+            <h-selecter placeholder="座位区:" :value.sync="form.zone" :items="items" @hfocus="handleFocus"/>
             <div class="btn">
                 <h-button @click="handleSubmit">
                     确认提交
@@ -27,6 +27,9 @@
             {{err}}
         </div>
 
+        <!--<div class="error">-->
+        <!--{{msg}} : {{count}}-->
+        <!--</div>-->
         <tip-line-dialog title="恭喜您报名成功" tip="获得神秘的礼物一份请您与2019年1月23日在现场点击个人中心领取" :is-show-button="false"
                          :visible.sync="isOk"/>
         <tip-line-dialog title="您已报名成功" tip="请去个人中心查看您的报名信息" :visible.sync="showHadCode" @return="handleReturn"/>
@@ -67,6 +70,7 @@
     import ViewWrap from "../components/ViewWrap";
     import TipLineDialog from "../components/dialog/TipLineDialog";
     import $ from "jquery";
+    import {getOS} from "../utils/common";
 
     export default {
         name: "Register",
@@ -83,7 +87,7 @@
                     userName: '',
                     userPhone: '',
                     userCompany: '',
-                    zone: {value: '海陵区', key: '1'},
+                    zone: {value: '海陵区', key: '0'},
                     userHead: ''
 
                 },
@@ -101,29 +105,68 @@
                 showHadCode: false,
                 showSample: false,
 
+                msg: '',
+                count: 0
             }
         },
         computed: {
-            ...mapGetters(['invitationCode', 'openid' , 'isAndroid'])
+            ...mapGetters(['invitationCode', 'openid', 'isAndroid'])
+        },
+        created() {
+            const arr = getOS()
+            const isAndroid = arr[0]
+            // this.msg = isAndroid ? 'Android' :navigator.userAgent
+            // this.count = 0
+            // if(isAndroid){
+            //     this.bodyHeight = $('body').height();
+            //     this.msg +=  this.bodyHeight + ','
+            //     $(window).resize(this.resize);
+            // }
+
+            this.bodyHeight = $('body').height();
+            // this.msg +=  this.bodyHeight + ','
+            $(window).resize(this.resize);
         },
         mounted() {
-            if(this.isAndroid){
-                this.bodyHeight = $('body').height();
-                $(window).resize(this.resize);
-            }
+            // const arr = getOS()
+            // const isAndroid = arr[0]
+            // // this.msg = isAndroid ? 'Android' :navigator.userAgent
+            // // this.count = 0
+            // // if(isAndroid){
+            // //     this.bodyHeight = $('body').height();
+            // //     this.msg +=  this.bodyHeight + ','
+            // //     $(window).resize(this.resize);
+            // // }
+            //
+            // this.bodyHeight = $('body').height();
+            // // this.msg +=  this.bodyHeight + ','
+            // $(window).resize(this.resize);
 
         },
-        beforeDestroy(){
-            if(this.isAndroid){
-                $(window).off('resize' , this.resize)
+        beforeDestroy() {
+            // const arr = getOS()
+            // const isAndroid = arr[0]
+            // if(isAndroid){
+            //     $(window).off('resize' , this.resize)
+            // }
+            try {
+                $(window).off('resize', this.resize)
+            } catch (e) {
+                console.log(e)
             }
+
         },
         methods: {
             ...mapActions([
                 'register',
             ]),
-            resize(){
+            resize() {
+                // this.count++
+                // alert('t')
                 $('body').height(this.bodyHeight);
+            },
+            handleFocus(e) {
+                // $('body').height(this.bodyHeight);
             },
             handleSample() {
                 this.showSample = true
@@ -187,7 +230,7 @@
                         this.isOk = true
                         this.goToPersonCenter()
                     } else {
-                        this.showHadCode = true
+                        // this.showHadCode = true
                     }
                 } catch (e) {
                     console.log(e)

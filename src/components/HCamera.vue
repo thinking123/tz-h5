@@ -43,10 +43,37 @@
                 reader.onload = function (e) {
 
                     self._uploadFile(e.target.result)
+
+
+                    // self.testImage(e.target.result)
+                }
+            },
+            async testImage(img) {
+                const fixedImg = await this.fixDirection(img)
+
+                const formData = new FormData();
+                formData.append("file", new Blob([fixedImg]))
+                // const file = this.$refs.file.files[0]
+                // formData.append("file", fixedImg);
+
+                const url = await uploadFile(formData)
+                if (url) {
+                    this.imgSrc = fixedImg
+                    this.$emit('change', url)
                 }
             },
             async _uploadFile(img) {
                 try {
+                    const formData = new FormData();
+                    const file = this.$refs.file.files[0]
+                    formData.append("file", file);
+
+                    const url = await uploadFile(formData)
+                    if (url) {
+                        this.imgSrc = img
+                        this.$emit('change', url)
+                    }
+                    return
 
                     if (this.isAndroid) {
                         const fixedImg = await this.fixDirection(img)

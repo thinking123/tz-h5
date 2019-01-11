@@ -18,6 +18,7 @@ export default {
         state.loading =  loadQueue.length > 0
     },
     [SET_INVITATIONCODE](state , invitationCode){
+        localStorage.setItem('invitationCode', invitationCode);
         state.invitationCode = invitationCode
     },
     [SET_USER](state , user){

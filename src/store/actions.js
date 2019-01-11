@@ -3,6 +3,7 @@ import {SET_INVITATIONCODE ,SET_USER ,SET_LINKS} from "./mutations";
 
 const checkInvitationCode = async function checkInvitationCode({ commit },invitationCode) {
     console.log('invitationCode' , invitationCode)
+
     const res = await http.checkInvitationCode({
         invitationCode
     })

@@ -8,7 +8,7 @@
         </div>
 
         <input ref="input" class="input" @change="handleChange" :value="v" :placeholder="placeholder"
-              />
+              @focus="handleFocus"/>
     </div>
 </template>
 
@@ -40,6 +40,9 @@
         methods: {
             handleChange(e) {
                 this.v = e.target.value
+            },
+            handleFocus(e){
+                this.$emit('hfocus' , e)
             }
         }
     }
