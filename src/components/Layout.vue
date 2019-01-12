@@ -2,6 +2,9 @@
     <div class="wrap">
         <h-header/>
         <router-view/>
+        <!--<div v-if="showTouch" class="touch" >-->
+
+        <!--</div>-->
     </div>
 </template>
 
@@ -37,5 +40,18 @@
 .wrap{
     width: 100%;
     height: 100%;
+    /*background-color: red;*/
 }
+
+    .touch{
+        pointer-events: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top:0;
+        left:0;
+        bottom: 0;
+        right: 0;
+        z-index: 20;
+    }
 </style>

@@ -9,9 +9,11 @@ export default {
     openid:openid ? openid : null,
     invitationCode:invitationCode,
     loading:false,
-    playMusic:true,
+    playMusic:false,
     links:[],
     user:user ? user : null,
     isAndroid:false,
-    isIOS:false
+    isIOS:false,
+    showTouch:false,
+    beginMusic:false
 }

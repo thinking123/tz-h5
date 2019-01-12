@@ -7,6 +7,7 @@
 </template>
 
 <script>
+    import {mapMutations} from 'vuex'
     export default {
         name: "SplashPage",
         props:{
@@ -15,6 +16,14 @@
                 default:false
             },
             remainTime:Number
+        },
+        methods: {
+            ...mapMutations([
+                'setBeginMusic' , 'setPlayMusic'
+            ])
+        },
+        beforeDestroy() {
+            // this.setPlayMusic(true)
         }
     }
 </script>

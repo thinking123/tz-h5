@@ -1,6 +1,12 @@
 <template>
-    <view-wrap title="注册报名">
-
+    <view-wrap title="注册报名" ref="register">
+        <!--<div class="error" style="font-size: large">-->
+        <!--{{msg}}-->
+        <!--</div>-->
+        <!--<div>-->
+        <!--{{nav}}-->
+        <!--</div>-->
+        <!--<input type="text" style="visibility: hidden" autofocus>-->
         <div class="image">
             <h-camera @change="handleCameraChange"/>
             <div class="sample" @click="handleSample">
@@ -10,12 +16,19 @@
         <div class="tip">
             如您对所拍照片不满意，可以再次点击照片框进行重拍
         </div>
-        <div class="form">
+        <div class="form" ref="form">
 
-            <h-input placeholder="姓名:" :value.sync="form.userName" class="input" @hfocus="handleFocus"/>
-            <h-input placeholder="手机:" :value.sync="form.userPhone" class="input" @hfocus="handleFocus"/>
-            <h-input placeholder="公司:" :value.sync="form.userCompany" class="input" @hfocus="handleFocus"/>
-            <h-selecter placeholder="座位区:" :value.sync="form.zone" :items="items" @hfocus="handleFocus"/>
+            <h-input placeholder="姓名:" :value.sync="form.userName" class="input"
+                     @hblur="handleBlur"
+                     @hfocus="handleFocus" :autofocus="true"/>
+            <h-input placeholder="手机:" :value.sync="form.userPhone" class="input"
+                     @hblur="handleBlur"
+                     @hfocus="handleFocus"/>
+            <h-input placeholder="单位:" :value.sync="form.userCompany" class="input"
+                     @hblur="handleBlur"
+                     @hfocus="handleFocus"/>
+            <h-selecter placeholder="座位区:" :value.sync="form.zone" :items="items" @hfocus="handleFocus"
+                        @hblur="handleBlur"/>
             <div class="btn">
                 <h-button @click="handleSubmit">
                     确认提交
@@ -26,6 +39,7 @@
         <div class="error" v-if="err" slot="error">
             {{err}}
         </div>
+
 
         <!--<div class="error">-->
         <!--{{msg}} : {{count}}-->
@@ -101,72 +115,80 @@
                     {value: '兴化市', key: '6'},
                     {value: '市直', key: '7'},
                 ],
+
+                isInputing: false,
                 isOk: false,
                 showHadCode: false,
                 showSample: false,
 
                 msg: '',
-                count: 0
+                count: 0,
+                nav: ''
+
+
             }
         },
         computed: {
-            ...mapGetters(['invitationCode', 'openid', 'isAndroid'])
-        },
-        created() {
-            const arr = getOS()
-            const isAndroid = arr[0]
-            // this.msg = isAndroid ? 'Android' :navigator.userAgent
-            // this.count = 0
-            // if(isAndroid){
-            //     this.bodyHeight = $('body').height();
-            //     this.msg +=  this.bodyHeight + ','
-            //     $(window).resize(this.resize);
-            // }
-
-            this.bodyHeight = $('body').height();
-            // this.msg +=  this.bodyHeight + ','
-            $(window).resize(this.resize);
+            ...mapGetters(['invitationCode', 'openid', 'isAndroid', 'isIOS'])
         },
         mounted() {
-            // const arr = getOS()
-            // const isAndroid = arr[0]
-            // // this.msg = isAndroid ? 'Android' :navigator.userAgent
-            // // this.count = 0
-            // // if(isAndroid){
-            // //     this.bodyHeight = $('body').height();
-            // //     this.msg +=  this.bodyHeight + ','
-            // //     $(window).resize(this.resize);
-            // // }
-            //
-            // this.bodyHeight = $('body').height();
-            // // this.msg +=  this.bodyHeight + ','
-            // $(window).resize(this.resize);
+            const arr = getOS()
+            this.nav = navigator.userAgent
+            const isAndroid = arr[0]
+            if (true) {
+                setTimeout(() => {
 
-        },
-        beforeDestroy() {
-            // const arr = getOS()
-            // const isAndroid = arr[0]
-            // if(isAndroid){
-            //     $(window).off('resize' , this.resize)
-            // }
-            try {
-                $(window).off('resize', this.resize)
-            } catch (e) {
-                console.log(e)
+                    this.bodyHeight = $('body').height();
+                    this.msg = `bh:${this.bodyHeight}`
+                }, 500)
             }
+
+
+            setTimeout(function () {
+                var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+            }, 100);
 
         },
         methods: {
             ...mapActions([
                 'register',
             ]),
-            resize() {
-                // this.count++
-                // alert('t')
-                $('body').height(this.bodyHeight);
-            },
             handleFocus(e) {
-                // $('body').height(this.bodyHeight);
+                const arr = getOS()
+                const isAndroid = arr[0]
+                this.nav = navigator.userAgent
+                if (true) {
+
+                    const register = this.$refs.register.$el
+
+                    let b = $('body').height();
+                    let r = $(register).height();
+
+                    this.msg = `FBef:bd=${b},rg=${r}`
+                    // alert(msg)
+
+
+                    $(register).height(this.bodyHeight);
+
+
+                    b = $('body').height();
+                    r = $(register).height();
+
+                    this.msg += `FAft:bd=${b},rg=${r}`
+                    // alert(msg)
+                } else {
+
+                }
+
+                this.isInputing = true
+            },
+            handleBlur(e) {
+                // alert('blur')
+                setTimeout(function () {
+                    var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                    window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+                }, 100);
             },
             handleSample() {
                 this.showSample = true
@@ -201,7 +223,7 @@
                     return err
                 }
                 if (!this.form.userCompany) {
-                    err = '请填写公司'
+                    err = '请填写单位'
                     return err
                 }
 
@@ -241,7 +263,11 @@
     }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
+
+    @import "../css/common";
+    @import "../css/media";
+
     .error {
         color: red;
         align-self: center;
@@ -258,7 +284,7 @@
 
         .sample {
             font-family: Hz-Tz;
-            font-size: large;
+            /*font-size: large;*/
             z-index: 100;
         }
 
@@ -266,8 +292,8 @@
     }
 
     .tip {
-        font-size: smaller;
-        margin-bottom: 1rem;
+        /*font-size: smaller;*/
+        /*margin-bottom: 1rem;*/
         z-index: 100;
     }
 
@@ -290,13 +316,39 @@
         /*width: initial;*/
         display: flex;
         justify-content: center;
+    }
 
-        > * {
+    $font-size-base-b: 2rem;
+    $font-size-base-s: 1.2rem;
+    $b:1rem;
+    $font-family: Hz-Tz;
+    @include all-media(($iphone4) , 1,3){
+        .sample {
+            font-size: $font-size-base-b -1;
+        }
+        .tip {
+            font-size: $font-size-base-s - 0.4;
+            margin-bottom: $b - 0.6;
+        }
+    }
+    @include all-media(($iphone5, $iphone6) , 4,6){
+        .sample {
+            font-size: $font-size-base-b -0.5;
+        }
+        .tip {
+            font-size: $font-size-base-s - 0.2;
+            margin-bottom: $b - 0.3;
+        }
+    }
 
-            height: 3rem;
-            width: 10rem;
 
-            font-size: large;
+    @include all-media(($iphone-p , $iphonex),7, 8) {
+        .sample {
+            font-size: $font-size-base-b ;
+        }
+        .tip {
+            font-size: $font-size-base-s;
+            margin-bottom: $b;
         }
     }
 

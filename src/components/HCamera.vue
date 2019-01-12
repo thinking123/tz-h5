@@ -1,6 +1,6 @@
 <template>
     <div class="wrap">
-        <input ref="file" type="file" @change="handleChange" accept="image/*" capture="camera"/>
+        <input ref="file" type="file" @change="handleChange" accept="image/*" />
         <img :src="imgSrc" class="img" ref="img"/>
     </div>
 </template>
@@ -113,12 +113,13 @@
     }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
     @import "../css/common";
+    @import "../css/media";
+
+    $camera:7rem;
 
     .wrap {
-        width: @camera;
-        height: @camera;
         display: flex;
         position: relative;
 
@@ -136,9 +137,32 @@
             width: 100%;
             left: 0;
             position: absolute;
-            border-radius: @camera-r;
+            border-radius: $camera-r;
             background-color: white;
         }
     }
+
+    $step:0.5;
+    @include all-media(($iphone4) , 1,3){
+        .wrap {
+            width: $camera - $step;
+            height: $camera -$step;
+        }
+    }
+    @include all-media(($iphone5, $iphone6) , 4,6){
+        .wrap {
+            width: $camera - $step;
+            height: $camera -$step;
+        }
+    }
+
+
+    @include all-media(($iphone-p , $iphonex),7, 8) {
+        .wrap {
+            width: $camera;
+            height: $camera;
+        }
+    }
+
 
 </style>

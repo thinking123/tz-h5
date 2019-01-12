@@ -31,6 +31,9 @@ export default {
     setPlayMusic(state , playMusic){
         state.playMusic = playMusic
     },
+    setBeginMusic(state , playMusic){
+        state.beginMusic = true
+    },
     setOpenId(state , openid){
         localStorage.setItem('openid', openid);
         state.openid = openid

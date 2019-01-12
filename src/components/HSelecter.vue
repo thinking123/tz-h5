@@ -9,7 +9,9 @@
         <!--<div class="tran"></div>-->
 
         <img class="tran" src="../assets/trangle.png"/>
-        <select class="input"  @change="handleChange" :value="v.value" :placeholder="placeholder" >
+        <select class="input"  @change="handleChange"
+                @focus="handleFocus"
+                :value="v.value" :placeholder="placeholder" @blur="handleBlur">
             <!--<h-select-item :content="item.content" v-for="item in items" @click.native="handleItemClick(item)" :is-active="current && item.key == current.key"/>-->
             <option v-for="item in items" class="option" :key="item.value">
                 {{item.value}}
@@ -56,6 +58,13 @@
             },
             handleItemClick(item){
                 this.current = item
+            },
+            handleFocus(e){
+                this.$emit('hfocus' , e)
+            },
+            handleBlur(e){
+                // alert('blur')
+                this.$emit('hblur' , e)
             }
         }
     }
@@ -105,11 +114,40 @@
         margin: 0;
         outline: none;
         background: transparent;
-        height: 2.5rem;
+        height: 3rem;
         color: @white;
         font-weight: @font-weight;
         font-size: @font-size;
     }
+
+    @media (device-height: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+        /* 兼容iphone4/4s */
+        .input {
+            height: 2.3rem;
+        }
+    }
+
+    @media (device-height: 568px) and (-webkit-min-device-pixel-ratio: 2) {
+        /* 兼容iphone5 */
+        　　 .input {
+            height: 2.5rem;
+        }
+    }
+
+    @media (device-height: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+        /* 兼容iphone6 */
+        　　 .input {
+            height: 2.8rem;
+        }
+    }
+
+    @media (device-height: 736px) and (-webkit-min-device-pixel-ratio: 2) {
+        /* 兼容iphone6 Plus */
+        　 .input {
+            height: 3rem;
+        }
+    }
+
 
     .option{
         background-color: @dialog-bg;

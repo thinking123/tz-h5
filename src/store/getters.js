@@ -12,4 +12,6 @@ export default {
     links: state => state.links,
     isAndroid: state => state.isAndroid,
     isIOS: state => state.isIOS,
+    showTouch: state => state.showTouch,
+    beginMusic: state => state.beginMusic,
 }

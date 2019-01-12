@@ -120,7 +120,7 @@
         },
         methods: {
             ...mapMutations([
-                'setLoaded'
+                'setLoaded' , 'setPlayMusic'
             ]),
             ...mapActions([
                 'getUser', 'getLink' , 'checkInvitationCode'
@@ -161,6 +161,7 @@
                 if(this.remainTime <= 0){
                     this.isShowSplash = false
                     this.setLoaded(true)
+                    this.setPlayMusic(true)
                     clearInterval(this.time)
                 }
             },
@@ -194,7 +195,11 @@
                 try {
                     const c = await this.checkInvitationCode(code)
                     if (c != 0) {
+                        // setTimeout(()=>{
+                        //
+                        // } , 1000)
                         this.$router.push({path: 'register'})
+
                     } else {
                         this.showErrorCode = true
                     }

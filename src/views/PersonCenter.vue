@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    公司:{{user.userCompany}}
+                    单位:{{user.userCompany}}
                 </div>
             </div>
             <h-card title="我的座位信息" :footer="footer" @click.native="handleToZone">

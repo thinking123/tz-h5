@@ -1,6 +1,6 @@
 <template>
     <base-dialog :visible.sync="showDialog" :is-show-mask="true">
-        <div class="content">
+        <div class="content"   @touchmove="touchMove" >
             <div class="title">
                 请输入邀请码
             </div>
@@ -54,6 +54,14 @@
             },
             handleSubmit(){
                 this.$emit('submit' , this.code)
+            },
+            touch(e){
+                e.stopPropagation();
+                // e.preventDefault()
+            },
+            touchMove(e){
+                e.stopPropagation();
+                e.preventDefault()
             }
         }
     }
@@ -65,7 +73,7 @@
         display: flex;
         flex-direction: column;
         padding: 2rem 1rem;
-
+        z-index: 2000;
         align-items: center;
         & > *{
             margin: 0.5rem 0;

@@ -8,7 +8,7 @@
         </div>
 
         <input ref="input" class="input" @change="handleChange" :value="v" :placeholder="placeholder"
-              @focus="handleFocus"/>
+               @focus="handleFocus" @blur="handleBlur"/>
     </div>
 </template>
 
@@ -24,6 +24,10 @@
             value: {
                 type: String,
                 default: ''
+            },
+            autofocus: {
+                type: Boolean,
+                default: false
             },
             placeholder: String
         },
@@ -41,25 +45,35 @@
             handleChange(e) {
                 this.v = e.target.value
             },
-            handleFocus(e){
-                this.$emit('hfocus' , e)
+            handleFocus(e) {
+                // setTimeout(()=>{
+                //     let panel = this.$refs.input
+                //     pannel.scrollIntoView(true)
+                //     pannel.scrollIntoViewIfNeeded();
+                // },200)
+
+                this.$emit('hfocus', e)
+            },
+            handleBlur(e) {
+                this.$emit('hblur', e)
             }
         }
     }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
     @import "../css/common";
+    @import "../css/media";
 
-    @bd-gap: -3px;
+    $bd-gap: -3px;
     .left {
-        left: @bd-gap;
-        top: @bd-gap
+        left: $bd-gap;
+        top: $bd-gap
     }
 
     .right {
-        right: @bd-gap;
-        bottom: @bd-gap
+        right: $bd-gap;
+        bottom: $bd-gap
     }
 
     .wrap {
@@ -72,7 +86,7 @@
         }
 
         .bd {
-            border: 1px solid @white;
+            border: 1px solid $white;
 
             height: 100%;
             width: 100%;
@@ -81,9 +95,9 @@
 
     ::placeholder {
         opacity: 1;
-        color: @white;
-        font-weight: @font-weight;
-        font-size: @font-size;
+        color: $white;
+        font-weight: $font-weight;
+        font-size: $font-size;
 
     }
 
@@ -96,9 +110,107 @@
         outline: none;
         background: transparent;
         height: 3rem;
-        color: @white;
-        font-weight: @font-weight;
-        font-size: @font-size;
+        color: $white;
+        /*font-weight: bolder;*/
+        /*font-size: large;*/
+
+        /*height: 3rem;*/
+
     }
+
+    @include range-media(1, 2) {
+        .input{
+            height: 2.5rem;
+            font-weight: bold;
+            font-size: initial;
+        }
+        ::placeholder {
+            font-weight: bold;
+            font-size: initial;
+        }
+    }
+
+    @include range-media(2, 5) {
+        .input{
+            height: 3rem;
+            font-weight: bolder;
+            font-size: large;
+        }
+        ::placeholder {
+            font-weight: bolder;
+            font-size: large
+        }
+
+    }
+    @include range-media(6, 7) {
+        .input{
+            height: 3rem;
+            font-weight: bolder;
+            font-size: large;
+        }
+        ::placeholder {
+            font-weight: bolder;
+            font-size: large
+        }
+    }
+    @include range-media(7, 8) {
+        .input{
+            height: 3.5rem;
+            font-weight: bolder;
+            font-size: large;
+        }
+        ::placeholder {
+            font-weight: bolder;
+            font-size: large;
+        }
+    }
+
+    @include use-media($iphone4) {
+        .input{
+            height: 2.5rem;
+            font-weight: bold;
+            font-size: initial;
+        }
+        ::placeholder {
+            font-weight: bold;
+            font-size: initial;
+        }
+
+    }
+    @include use-media($iphone5, $iphone6) {
+        .input{
+            height: 3rem;
+            font-weight: bolder;
+            font-size: large;
+        }
+        ::placeholder {
+            font-weight: bolder;
+            font-size: large
+        }
+    }
+    @include use-media($iphone-p) {
+        .input{
+            height: 3.5rem;
+            font-weight: bolder;
+            font-size: large;
+        }
+        ::placeholder {
+            font-weight: bolder;
+            font-size: large;
+        }
+
+    }
+    @include use-media($iphonex) {
+        .input{
+            height: 3.5rem;
+            font-weight: bolder;
+            font-size: large;
+        }
+        ::placeholder {
+            font-weight: bolder;
+            font-size: large;
+        }
+    }
+
 
 </style>
