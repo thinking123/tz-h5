@@ -70,8 +70,9 @@
     }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
     @import "../css/common";
+    @import "../css/media";
 
 
     .content {
@@ -84,8 +85,8 @@
 
 
         .item {
-            margin: 0.2rem 0 1.5rem;
-            font-size: large;
+            /*margin: 0.2rem 0 1.5rem;*/
+            /*font-size: large;*/
 
 
         }
@@ -119,6 +120,79 @@
 
         }
     }
+    @include range-media(1,3){
+        .item {
+            margin: 0.1rem 0 1.3rem;
+            font-size: 1.8rem;
+        }
+        .button {
+            margin-top: 0.8rem;
+            height: 2.8rem !important;
+            width: 11rem !important;
+        }
+    }
+    @include range-media(4,6){
+        .item {
+            margin: 0.2rem 0 1.5rem;
+            font-size: 2rem;
+        }
+        .button {
+            margin-top: 1rem;
+            height: 3rem !important;
+            width: 12rem !important;
+        }
 
+    }
+
+    @include range-media(7,8){
+        .item {
+            margin: 0.2rem 0 1.5rem;
+            font-size: 2rem;
+        }
+        .button {
+            margin-top: 1rem;
+            height: 3rem !important;
+            width: 12rem !important;
+        }
+
+    }
+    @include use-media($iphone4){
+        .item {
+            margin: 0.1rem 0 1.1rem;
+            font-size: 1.6rem;
+        }
+        .button {
+            margin-top: 0.6rem;
+            height: 2.5rem !important;
+            width: 10rem !important;
+        }
+    }
+
+
+    @include use-media($iphone5, $iphone6){
+        .item {
+            margin: 0.1rem 0 1.3rem;
+            font-size: 1.8rem;
+        }
+        .button {
+            margin-top: 0.8rem;
+            height: 2.8rem !important;
+            width: 11rem !important;
+        }
+    }
+
+    @include use-media($iphone-p, $iphonex){
+
+        .item {
+            margin: 0.2rem 0 1.5rem;
+            font-size: 2rem;
+        }
+        .button {
+            margin-top: 1rem;
+            height: 3rem !important;
+            width: 12rem !important;
+        }
+
+    }
 
 </style>

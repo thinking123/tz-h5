@@ -11,9 +11,9 @@
                         手机:{{user.userPhone}}
                     </div>
                 </div>
-                <div class="item">
-                    单位:{{user.userCompany}}
-                </div>
+                <!--<div class="item">-->
+                    <!--单位:{{user.userCompany}}-->
+                <!--</div>-->
             </div>
             <h-card title="我的座位信息" :footer="footer" @click.native="handleToZone">
                 <img :src="siteBg" class="img-str"/>
@@ -106,9 +106,25 @@
     }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
     @import "../css/common";
-    @item-col: #0f6EB0;
+    @import "../css/media";
+
+    $camera:7rem;
+
+    $font-size-b: 3rem;
+    $font-size: 2rem;
+    $font-weight: bolder;
+    $font-size-base-s: 1.2rem;
+    $top: 25rem;
+    $m-top: 1.5rem;
+    $line-w: 3rem;
+    $b: 1rem;
+    $font-family: Hz-Tz;
+
+
+    $item-col: #0f6EB0;
+
     .content {
         display: flex;
         flex-direction: column;
@@ -121,9 +137,9 @@
             height: 100%;
         }
         .icon{
-            width: @camera;
-            height: @camera;
-            border-radius: @camera-r;
+            width: $camera;
+            height: $camera;
+            border-radius: $camera-r;
             /*margin: 10px 0;*/
             margin-bottom: 0.5rem;
             background-color: white;
@@ -169,4 +185,57 @@
             font-size: larger;
         }
     }
+    @include range-media(1,3){
+        .btn-group {
+            margin-top: 1rem;
+            & > * {
+                width: 10rem;
+            }
+        }
+    }
+    @include range-media(4,6){
+        .btn-group {
+            margin-top: 1rem;
+            & > * {
+                width: 10rem;
+            }
+        }
+    }
+
+    @include range-media(7,8){
+        .btn-group {
+            margin-top: 1rem;
+            & > * {
+                width: 10rem;
+            }
+        }
+    }
+    @include use-media($iphone4){
+        .btn-group {
+            margin-top: 1rem;
+            & > * {
+                width: 10rem;
+            }
+        }
+    }
+
+
+    @include use-media($iphone5, $iphone6){
+        .btn-group {
+            margin-top: 1.2rem;
+            & > * {
+                width: 11rem;
+            }
+        }
+    }
+
+    @include use-media($iphone-p, $iphonex){
+        .btn-group {
+            margin-top: 1.5rem;
+            & > * {
+                width: 12rem;
+            }
+        }
+    }
+
 </style>

@@ -140,6 +140,8 @@
                             }else{
 
                                 this.showCode = true
+                                //不需要邀请码，直接到注册哪里
+                                // this.$router.push({path: 'register'})
                                 return
                                 // this.$router.push({path: item.path})
                             }
@@ -219,7 +221,45 @@
     }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
+    @import "../css/common";
+    @import "../css/media";
+    $font-size-base-b: 2rem;
+    $font-size-base-s: 1.2rem;
+    $b: 1rem;
+    $font-family: Hz-Tz;
+    @include all-media(($iphone4), 1, 3) {
+        .sample {
+            font-size: $font-size-base-b -1;
+        }
+        .tip {
+            font-size: $font-size-base-s - 0.4;
+            margin-bottom: $b - 0.6;
+        }
+    }
+
+    @include all-media(($iphone5, $iphone6), 4, 6) {
+        .sample {
+            font-size: $font-size-base-b -0.5;
+        }
+        .tip {
+            font-size: $font-size-base-s - 0.2;
+            margin-bottom: $b - 0.3;
+        }
+    }
+
+
+    @include all-media(($iphone-p, $iphonex), 7, 8) {
+        .sample {
+            font-size: $font-size-base-b;
+        }
+        .tip {
+            font-size: $font-size-base-s;
+            margin-bottom: $b;
+        }
+    }
+
+
     .home-page {
         background-image: url("../assets/view/home.png");
         background-size: 100% 100%;

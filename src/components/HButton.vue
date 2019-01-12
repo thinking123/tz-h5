@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div class="wrap" >
         <div class="bd left">
 
         </div>
@@ -26,6 +26,7 @@
         },
         methods: {
             handleClick(e) {
+                // alert('cli')
                 this.$emit('click', e)
             }
         }
@@ -51,15 +52,19 @@
         width: 8rem;
         height: 3rem;
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         & > * {
-            position: absolute;
-            height: 100%;
-            width: 100%;
+
         }
 
         .bd {
             border: 1px solid $white;
+            position: absolute;
+            height: 100%;
+            width: 100%;
         }
 
         .btn {
@@ -67,7 +72,10 @@
             border: none;
             outline: none;
             color: $white;
-
+            height: 100%;
+            width: 100%;
+            left:0;
+            position: absolute;
         }
     }
 
@@ -77,77 +85,65 @@
     $btn-h:3rem;
     $step:0.2;
 
-    @include all-media(($iphone4) , 1,3){
+
+    @include range-media(1, 4) {
         .btn {
-            font-size: $font-size-base - $step;
+            font-size: 1.8rem;
             font-weight: bold;
             font-family: $font-family;
+
         }
         .wrap {
-            width: $btn-w - $step;
-            height: $btn-h -$step;
+            width:8rem;
+            height: 2.5rem;
         }
     }
 
-    @include all-media(($iphone4) , 1,3){
+    @include range-media(5, 8) {
         .btn {
-            font-size: $font-size-base - $step;
+            font-size: 2rem;
             font-weight: bold;
             font-family: $font-family;
+
         }
         .wrap {
-            width: $btn-w - $step;
-            height: $btn-h -$step;
+            width:9rem;
+            height: 3rem;
         }
     }
 
-    @include range-media(4, 6) {
+    @include use-media($iphone4) {
         .btn {
             font-size: $font-size-base;
             font-weight: bold;
             font-family: $font-family;
         }
         .wrap {
-            width: $btn-w;
+            width: 18rem;
             height: $btn-h;
         }
     }
-
-    @include range-media(7, 8) {
-        .btn {
-            font-size: $font-size-base + $step;
-            font-weight: bold;
-            font-family: $font-family;
-        }
-        .wrap {
-            width: $btn-w + 0.5;
-            height: $btn-h + 0.5;
-        }
-    }
-
 
     @include use-media($iphone5, $iphone6) {
         .btn {
-            font-size: $font-size-base;
-            font-weight: bold;
-            font-family: $font-family;
+            font-size: 1.8rem;
+            font-weight: bolder;
         }
         .wrap {
-            width: $btn-w;
-            height: $btn-h;
+            width:8.5rem;
+            height: 2.8rem;
         }
     }
 
     @include use-media($iphone-p , $iphonex) {
 
         .btn {
-            font-size: $font-size-base + $step;
-            font-weight: bold;
-            font-family: $font-family;
+            font-size: 2rem;
+            font-weight: bolder;
         }
         .wrap {
-            width: $btn-w + 1.2;
-            height: $btn-h + 0.2;
+            width:9rem;
+            height: 3rem;
         }
     }
 

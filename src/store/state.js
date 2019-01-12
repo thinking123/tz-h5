@@ -1,8 +1,11 @@
 const openid = localStorage.getItem('openid');
-const invitationCode = localStorage.getItem('invitationCode');
+let invitationCode = localStorage.getItem('invitationCode');
 let user = localStorage.getItem('user')
 if(user){
     user = JSON.parse(user)
+}
+if(!invitationCode){
+    invitationCode = 'test'
 }
 export default {
     isLoaded:false,

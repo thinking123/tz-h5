@@ -53,6 +53,7 @@
                 this.showDialog = false
             },
             handleSubmit(){
+
                 this.$emit('submit' , this.code)
             },
             touch(e){
@@ -60,8 +61,8 @@
                 // e.preventDefault()
             },
             touchMove(e){
-                e.stopPropagation();
-                e.preventDefault()
+                // e.stopPropagation();
+                // e.preventDefault()
             }
         }
     }
@@ -73,10 +74,11 @@
         display: flex;
         flex-direction: column;
         padding: 2rem 1rem;
-        z-index: 2000;
+        z-index: 200;
         align-items: center;
         & > *{
             margin: 0.5rem 0;
+            z-index: 200;
         }
 
         .input{
@@ -88,9 +90,10 @@
             align-self: stretch;
             margin-top: 1rem;
             &>*{
-                width: 5rem;
-                height: 2rem;
+                /*width: 5rem;*/
+                /*height: 2rem;*/
             }
+
         }
     }
 </style>

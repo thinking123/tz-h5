@@ -159,8 +159,8 @@
 
     @include all-media(($iphone-p , $iphonex),7, 8) {
         .wrap {
-            width: $camera;
-            height: $camera;
+            width: 7rem;
+            height: 6.5rem;
         }
     }
 

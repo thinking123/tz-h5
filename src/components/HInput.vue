@@ -65,10 +65,9 @@
     @import "../css/common";
     @import "../css/media";
 
-    $bd-gap: -3px;
+    $bd-gap: -6px;
     .left {
-        left: $bd-gap;
-        top: $bd-gap
+
     }
 
     .right {

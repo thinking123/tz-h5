@@ -60,43 +60,104 @@
         }
     }
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
 
     @import "../css/common";
+    @import "../css/media";
 
 
-    @item-bg: #dbe2f6;
-    @item-border: #10379A;
-    @outer-p: 90%;
-    @inner-p: 70%;
-    @gap-h: 0px;
-    @gap-w: 0px;
-    @gap-h-d: 0px;
-    @gap-w-d: 0px;
+
+
+
+
+
+
+
+
+    @include range-media(1 , 3){
+        .img{
+            width: 8.5rem;
+            height: 9.5rem;
+        }
+    }
+
+    @include range-media(4 , 6){
+        .img{
+            width: 9.5rem;
+            height: 10.5rem;
+        }
+    }
+
+    @include range-media(7 , 8){
+        .img{
+            width: 10.5rem;
+            height: 11rem;
+        }
+    }
+
+
+
+
+
+    @include use-media($iphone4) {
+        .img{
+            height: 9rem;
+        }
+    }
+    @include use-media($iphone5, $iphone6) {
+        .img{
+            height: 10rem;
+        }
+    }
+    @include use-media($iphone-p, $iphonex) {
+        .img{
+            height: 11rem;
+            width: 9.5rem;
+        }
+    }
+
+
+
+
 
 
     .img {
 
         transition: transform 0.5s;
-        @media screen and (max-width: 321px) {
-            width: 6.5rem;
-            height: 7.5rem;
-        }
-        @media screen and (min-width: 321px) and (max-width: 375px) {
-            width: 7.5rem;
-            height: 8.5rem;
-        }
+        /*@media screen and (max-width: 321px)
 
-        @media screen and (min-width: 376px) and (max-width: 414px) {
-            width: 7.5rem;
-            height: 8.5rem;
+             @include range-media(1 , 2 , 'w'){
+        .img{
+            height: 9rem;
         }
+    }
+
+    @include range-media(3 , 4, 'w'){
+        .img{
+            height: 10rem;
+        }
+    }
 
 
-        @media screen and (min-width: 414px) {
-            width: 7.5rem;
-            height: 8.5rem;
-        }
+         {*/
+            /*width: 6.5rem;*/
+            /*height: 7.5rem;*/
+        /*}*/
+        /*@media screen and (min-width: 321px) and (max-width: 375px) {*/
+            /*width: 7.5rem;*/
+            /*height: 8.5rem;*/
+        /*}*/
+
+        /*@media screen and (min-width: 376px) and (max-width: 414px) {*/
+            /*width: 7.5rem;*/
+            /*height: 8.5rem;*/
+        /*}*/
+
+
+        /*@media screen and (min-width: 414px) {*/
+            /*width: 7.5rem;*/
+            /*height: 8.5rem;*/
+        /*}*/
 
 
     }

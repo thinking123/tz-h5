@@ -24,9 +24,9 @@
             <h-input placeholder="手机:" :value.sync="form.userPhone" class="input"
                      @hblur="handleBlur"
                      @hfocus="handleFocus"/>
-            <h-input placeholder="单位:" :value.sync="form.userCompany" class="input"
-                     @hblur="handleBlur"
-                     @hfocus="handleFocus"/>
+            <!--<h-input placeholder="单位:" :value.sync="form.userCompany" class="input"-->
+                     <!--@hblur="handleBlur"-->
+                     <!--@hfocus="handleFocus"/>-->
             <h-selecter placeholder="座位区:" :value.sync="form.zone" :items="items" @hfocus="handleFocus"
                         @hblur="handleBlur"/>
             <div class="btn">
@@ -84,7 +84,7 @@
     import ViewWrap from "../components/ViewWrap";
     import TipLineDialog from "../components/dialog/TipLineDialog";
     import $ from "jquery";
-    import {getOS} from "../utils/common";
+    import {getOS ,isIphone , isIphone6} from "../utils/common";
 
     export default {
         name: "Register",
@@ -132,63 +132,43 @@
             ...mapGetters(['invitationCode', 'openid', 'isAndroid', 'isIOS'])
         },
         mounted() {
-            const arr = getOS()
-            this.nav = navigator.userAgent
-            const isAndroid = arr[0]
-            if (true) {
+            this.scrollToForIphone6()
+            if (!isIphone()) {
                 setTimeout(() => {
 
                     this.bodyHeight = $('body').height();
                     this.msg = `bh:${this.bodyHeight}`
                 }, 500)
             }
-
-
-            setTimeout(function () {
-                var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
-                window.scrollTo(0, Math.max(scrollHeight - 1, 0));
-            }, 100);
-
         },
         methods: {
             ...mapActions([
                 'register',
             ]),
-            handleFocus(e) {
-                const arr = getOS()
-                const isAndroid = arr[0]
-                this.nav = navigator.userAgent
-                if (true) {
-
-                    const register = this.$refs.register.$el
-
-                    let b = $('body').height();
-                    let r = $(register).height();
-
-                    this.msg = `FBef:bd=${b},rg=${r}`
-                    // alert(msg)
-
-
-                    $(register).height(this.bodyHeight);
-
-
-                    b = $('body').height();
-                    r = $(register).height();
-
-                    this.msg += `FAft:bd=${b},rg=${r}`
-                    // alert(msg)
-                } else {
-
+            scrollToForIphone6() {
+                if (isIphone6()) {
+                    alert('iphone6 scroll')
+                    setTimeout(function () {
+                        var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                        window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+                    }, 100);
                 }
 
-                this.isInputing = true
+            },
+            handleFocus(e) {
+                this.nav = navigator.userAgent
+                if (!isIphone()) {
+                    const register = this.$refs.register.$el
+                    $(register).height(this.bodyHeight);
+                }
+
             },
             handleBlur(e) {
                 // alert('blur')
-                setTimeout(function () {
-                    var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
-                    window.scrollTo(0, Math.max(scrollHeight - 1, 0));
-                }, 100);
+                // setTimeout(function () {
+                //     var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                //     window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+                // }, 100);
             },
             handleSample() {
                 this.showSample = true
@@ -222,10 +202,10 @@
                     err = '请填写正确手机号'
                     return err
                 }
-                if (!this.form.userCompany) {
-                    err = '请填写单位'
-                    return err
-                }
+                // if (!this.form.userCompany) {
+                //     err = '请填写单位'
+                //     return err
+                // }
 
 
                 return err
@@ -244,7 +224,7 @@
                         userPhone: this.form.userPhone,
                         userHead: this.form.userHead,
                         userSeat: this.form.zone.key,
-                        userCompany: this.form.userCompany,
+                        // userCompany: this.form.userCompany,
                         invitationCode: this.invitationCode
                     }
                     const res = await this.register(data)
@@ -252,6 +232,7 @@
                         this.isOk = true
                         this.goToPersonCenter()
                     } else {
+
                         // this.showHadCode = true
                     }
                 } catch (e) {
@@ -267,6 +248,120 @@
 
     @import "../css/common";
     @import "../css/media";
+
+    $font-size-base-b: 2rem;
+    $font-size-base-s: 1.2rem;
+    $b: 1rem;
+    $font-family: Hz-Tz;
+
+    @include range-media(1, 4) {
+        .sample {
+            font-size: 1.5rem;
+        }
+        .tip {
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .form {
+            & > * {
+                margin-bottom: 2rem;
+
+            }
+        }
+        .btn {
+            & > * {
+                width: 10rem;
+            }
+        }
+    }
+
+    @include range-media(5, 8) {
+        .sample {
+            font-size: 1.8rem;
+        }
+        .tip {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form {
+            & > * {
+                margin-bottom: 2.2rem;
+
+            }
+        }
+        .btn {
+            & > * {
+                width: 15rem;
+            }
+        }
+    }
+
+    @include use-media($iphone4) {
+        .sample {
+            font-size: 1.5rem;
+        }
+        .tip {
+            font-size: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .btn {
+            & > * {
+                width: 13rem;
+            }
+        }
+        .form {
+            & > * {
+                margin-bottom: 1rem;
+
+            }
+        }
+    }
+
+    @include use-media($iphone5, $iphone6) {
+        .sample {
+            font-size: 1.8rem;
+        }
+        .tip {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .btn {
+            & > * {
+                width: 15rem;
+            }
+        }
+        .form {
+            & > * {
+                margin-bottom: 2rem;
+
+            }
+        }
+    }
+
+    @include use-media($iphone-p, $iphonex) {
+        .sample {
+            font-size: $font-size-base-b;
+        }
+        .tip {
+            font-size: $font-size-base-s;
+            margin-bottom: $b;
+        }
+
+        .btn {
+            & > * {
+                width: 15rem;
+            }
+        }
+        .form {
+            & > * {
+                margin-bottom: 2rem;
+
+            }
+        }
+    }
+
 
     .error {
         color: red;
@@ -305,9 +400,8 @@
 
         & > * {
             flex: 1;
-            margin-bottom: 1.1rem;
-            font-size: x-large;
-            font-weight: bolder;
+            /*margin-bottom: 1.1rem;*/
+
         }
     }
 
@@ -318,38 +412,5 @@
         justify-content: center;
     }
 
-    $font-size-base-b: 2rem;
-    $font-size-base-s: 1.2rem;
-    $b:1rem;
-    $font-family: Hz-Tz;
-    @include all-media(($iphone4) , 1,3){
-        .sample {
-            font-size: $font-size-base-b -1;
-        }
-        .tip {
-            font-size: $font-size-base-s - 0.4;
-            margin-bottom: $b - 0.6;
-        }
-    }
-    @include all-media(($iphone5, $iphone6) , 4,6){
-        .sample {
-            font-size: $font-size-base-b -0.5;
-        }
-        .tip {
-            font-size: $font-size-base-s - 0.2;
-            margin-bottom: $b - 0.3;
-        }
-    }
-
-
-    @include all-media(($iphone-p , $iphonex),7, 8) {
-        .sample {
-            font-size: $font-size-base-b ;
-        }
-        .tip {
-            font-size: $font-size-base-s;
-            margin-bottom: $b;
-        }
-    }
 
 </style>

@@ -41,13 +41,13 @@ $iphonex: "only screen
 
 /*common mode*/
 $h8: "only screen and (min-height: 800px)";
-$h7: "only screen and (min-height: 750px) and (max-height: 799px)";
-$h6: "only screen and (min-height: 667px) and (max-height: 735px)";
-$h5: "only screen and (min-height: 640px) and (max-height: 719px)";
-$h4: "only screen and (min-height: 415px) and (max-height: 639px)";
-$h3: "only screen and (min-height: 376px) and (max-height: 414px)";
-$h2: "only screen and (min-height: 321px) and (max-height: 375px)";
-$h1: "only screen and (max-height: 311px)";
+$h7: "only screen and (min-height: 750px) and (max-height: 800px)";
+$h6: "only screen and (min-height: 700px) and (max-height: 750px)";
+$h5: "only screen and (min-height: 650px) and (max-height: 700px)";
+$h4: "only screen and (min-height: 600px) and (max-height: 650px)";
+$h3: "only screen and (min-height: 550px) and (max-height: 650px)";
+$h2: "only screen and (min-height: 450px) and (max-height: 550px)";
+$h1: "only screen and (max-height: 450px)";
 
 
 $w4: "only screen and (min-width: 414px)";
@@ -59,8 +59,8 @@ $w1: "only screen and (max-width: 319px)";
   $list-h: ($h1, $h2, $h3, $h4, $h5, $h6, $h7, $h8);
   $list-w: ($w1, $w2, $w3, $w4);
 
-  @each $v in ($from, $to) {
-
+  //@each $v in ($from, $to) {
+  @for $v from $from through $to {
     @if $head == 'h' {
       $hv: nth($list-h, $v);
       @media #{$hv} {
@@ -85,12 +85,18 @@ $w1: "only screen and (max-width: 319px)";
 }
 
 @mixin all-media($ms , $from , $to , $head:'h') {
-  @include use-media($ms){
+
+  @each $m in $ms {
+    @include use-media($m) {
+      @content;
+    }
+  ;
+  }
+
+  @include range-media($from, $to, $head) {
     @content;
-  };
-  @include range-media($from , $to , $head){
-    @content;
-  };
+  }
+;
 }
 
 /*

@@ -2,7 +2,7 @@
     <div class="wrap"  @touchstart="touch">
         <div @click="handleMusic" class="music">
             <div class="icon" :style="anim">
-                <audio ref="music" loop="loop" autoplay="autoplay">
+                <audio ref="music" loop="loop" autoplay="autoplay" >
                     <source src="../assets/music.mp3" type="audio/mpeg" >
                 </audio>
             </div>
@@ -24,15 +24,6 @@
                 }
             }
         },
-        watch:{
-            playMusic(v){
-                // const m = this.$refs.music
-                // if(m){
-                //     m ? m.play().catch(err=>alert(err.message)) : m.pause().catch(err=>alert(err.message))
-                // }
-
-            }
-        },
         data() {
             return {
                 // img: require('../assets/music.mp3')
@@ -45,7 +36,7 @@
             ]),
             handleMusic() {
                 try {
-                    // const m = this.$refs.music
+                    const m = this.$refs.music
                     this.setPlayMusic(!this.playMusic)
                     this.playMusic ? m.play() : m.pause()
                 } catch (e) {
@@ -59,16 +50,16 @@
             // },
             audioAutoPlay(id) {
                 // var audio = document.getElementById(id);
-                alert('play music first')
+                // alert('play music first')
                 const m = this.$refs.music
-
+                this.setPlayMusic(true)
                 m.play().catch(err=>alert(err.message)) ;
                 // document.addEventListener("WeixinJSBridgeReady", function () {
                 //     audio.play();
                 // }, false);
             },
             touch(e){
-                e.stopPropagation();
+                // e.stopPropagation();
             },
             init(){
                 // const appId=''

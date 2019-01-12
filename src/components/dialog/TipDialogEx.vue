@@ -50,7 +50,31 @@
     }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
+    @import "../../css/common";
+    @import "../../css/media";
+    @include range-media(1,4) {
+        .title {
+            font-size: 1.5rem;
+        }
+    }
+    @include range-media(5,8) {
+        .title {
+            font-size: 2rem;
+        }
+    }
+
+    @include use-media($iphone5, $iphone6) {
+        .title {
+            font-size: 1.5rem;
+        }
+    }
+    @include use-media($iphone-p, $iphonex , $iphone5, $iphone6) {
+        .title {
+            font-size: 1.8rem;
+        }
+    }
+
     .content{
         display: flex;
         flex-direction: column;

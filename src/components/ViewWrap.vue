@@ -51,52 +51,101 @@
     $line-w: 3rem;
     $b: 1rem;
     $font-family: Hz-Tz;
-    @include all-media(($iphone4), 1, 3) {
+
+    @include range-media(1,3){
         .title-wrap {
-            font-weight: bold ;
-            font-size: $font-size-b - 1;
-            margin-top: $m-top - 0.5rem;
+            font-weight: bolder;
+            font-size: 2.5rem;
+            margin-top: 1.5rem;
         }
         .line {
-            width: $line-w -0.2;
+            width: 3rem;
         }
         .wrap-content {
-            margin-top: $top - 6;
+            margin-top: 18rem;
         }
         .title {
-            margin: 0 0.6rem;
+            margin: 0 1rem;
+        }
+    }
+    @include range-media(4,6){
+        .title-wrap {
+            font-weight: bolder;
+            font-size: 2.8rem;
+            margin-top: 1.5rem;
+        }
+        .line {
+            width: 3rem;
+        }
+        .wrap-content {
+            margin-top: 18rem;
+        }
+        .title {
+            margin: 0 1rem;
         }
     }
 
-    @include all-media(($iphone5, $iphone6), 4, 6) {
+    @include range-media(7,8){
         .title-wrap {
-            font-weight: bold;
-            font-size: $font-size-b - 0.5;
-            margin-top: $m-top - 3;
+            font-weight: bolder;
+            font-size: 2.8rem;
+            margin-top: 1.5rem;
         }
         .line {
-            width: $line-w;
+            width: 3rem;
         }
         .wrap-content {
-            margin-top: $top;
+            margin-top: 18rem;
+        }
+        .title {
+            margin: 0 1rem;
+        }
+    }
+    @include use-media($iphone4){
+        .title-wrap {
+            font-weight: bolder;
+            font-size: 2.3rem;
+            margin-top: 1.1rem;
+        }
+        .line {
+            width: 2.5rem;
+        }
+        .wrap-content {
+            margin-top: 14rem;
+        }
+        .title {
+            margin: 0 0.5rem;
+        }
+    }
+
+    @include use-media($iphone5, $iphone6){
+        .title-wrap {
+            font-weight: bolder;
+            font-size: 2.5rem;
+            margin-top: 1.3rem;
+        }
+        .line {
+            width: 2.8rem;
+        }
+        .wrap-content {
+            margin-top: 16rem;
         }
         .title {
             margin: 0 0.8rem;
         }
     }
 
-
-    @include all-media(($iphone-p, $iphonex), 7, 8) {
+    @include use-media($iphone-p, $iphonex){
         .title-wrap {
             font-weight: bolder;
-            font-size: $font-size-b;
-            margin-top: $m-top;
+            font-size: 2.8rem;
+            margin-top: 1.5rem;
         }
         .line {
-            width: $line-w;
+            width: 3rem;
         }
         .wrap-content {
-            margin-top: 20rem;
+            margin-top: 18rem;
         }
         .title {
             margin: 0 1rem;

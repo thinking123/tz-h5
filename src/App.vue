@@ -15,12 +15,12 @@
         //         'setIOS',
         //     ]),
         // },
-        // mounted() {
-        //
-        //     const os = getOS()
-        //     this.setAndroid('setAndroid' , os[0])
-        //     this.setIOS('setIOS' , os[1])
-        // }
+        mounted() {
+
+            // const os = getOS()
+            // this.setAndroid('setAndroid' , os[0])
+            // this.setIOS('setIOS' , os[1])
+        }
     }
 </script>
 
