@@ -194,7 +194,7 @@
                 }
             },
             handleBlur(e) {
-                // this.scrollToForIphone6()
+                this.scrollToForIphone6()
             },
             async init() {
                 try {
@@ -338,6 +338,15 @@
                 grid-gap: 10px;
                 grid-template-columns: 1fr 1fr 1fr;
                 grid-template-rows: 1fr 1fr 1fr;
+
+                -webkit-grid-gap: 10px;
+                -webkit-grid-template-columns: 1fr 1fr 1fr;
+                -webkit-grid-template-rows: 1fr 1fr 1fr;
+
+                -ms-grid-gap: 10px;
+                -ms-grid-template-columns: 1fr 1fr 1fr;
+                -ms-grid-template-rows: 1fr 1fr 1fr;
+
                 margin: 20px;
                 z-index: 20;
             }

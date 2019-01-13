@@ -8,7 +8,7 @@
         </div>
 
         <input ref="input" class="input" v-model="v" :placeholder="placeholder"
-               @focus="handleFocus" @keydown="handleKeyDown"/>
+               @focus="handleFocus"/>
     </div>
 </template>
 
@@ -54,14 +54,14 @@
         methods: {
             handleKeyDown(e){
                 // alert(e.keyCode)
-                if(e.keyCode == 13){
-                    if(!this.loading){
-                        e.preventDefault()
-                        e.stopPropagation()
-                        this.$emit('hsubmit' ,e)
-                    }
-
-                }
+                // if(e.keyCode == 13){
+                //     if(!this.loading){
+                //         e.preventDefault()
+                //         e.stopPropagation()
+                //         this.$emit('hsubmit' ,e)
+                //     }
+                //
+                // }
             },
             handleChange(e) {
                 this.v = e.target.value

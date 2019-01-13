@@ -23,8 +23,8 @@
                 'setIOS',
             ]),
             async init(){
-                const md = await md5()
-                console.log('md'  , md)
+                // const md = await md5()
+                // console.log('md'  , md)
             }
         },
         created(){

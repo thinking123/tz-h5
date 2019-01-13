@@ -1,4 +1,4 @@
-import saltedMd5 from 'salted-md5'
+// import saltedMd5 from 'salted-md5'
 const data = '泰州电信';
 const salt = 'liKj&.N*';
 
@@ -11,5 +11,5 @@ const salt = 'liKj&.N*';
 
 
 export async function md5() {
-    return await saltedMd5(data, salt, true);
+    // return await saltedMd5(data, salt, true);
 }
