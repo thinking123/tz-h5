@@ -2,12 +2,12 @@
 
 <template>
     <base-dialog :isShowMask="isShowMask" :visible.sync="showDialog">
-        <div class="content">
-            <div class="title">
+        <div class="content" ref="content">
+            <div class="title" ref="title">
                 {{title}}
             </div>
             <div class="btn-group">
-                <h-button @click="handleReturn">
+                <h-button @click="handleReturn" ref="subbtn">
                     返回
                 </h-button>
             </div>
@@ -18,6 +18,8 @@
 <script>
     import HButton from "../HButton";
     import BaseDialog from "./BaseDialog";
+    import {needAdjust , adjustRatio} from "../../utils/ratio-convert";
+    import $ from 'jquery'
     export default {
         name: "TipDialogEx",
         components: {HButton, BaseDialog},
@@ -31,6 +33,27 @@
                 default: false
             },
             title:String
+        },
+        watch:{
+            visible(v){
+                if(v){
+                    this.$nextTick(()=>{
+                        const body = this.$refs.content
+                        const title =  this.$refs.title
+                        // const input =  this.$refs.input.$el
+                        const button1 =  this.$refs.subbtn.$el
+                        // const button2 =  this.$refs.button2.$el
+
+                        const bodyW = $(body).width() ,
+                            bodyH = $(body).height() ,
+                            btnW = $(button1).width()
+
+                        if(needAdjust(bodyW , btnW , 2)){
+                            adjustRatio(this.$options.name , bodyW , bodyH , title , null , button1 , null)
+                        }
+                    })
+                }
+            }
         },
         computed:{
             showDialog: {
@@ -54,6 +77,9 @@
     @import "../../css/common";
     @import "../../css/media";
 
+    /*.title{*/
+        /*white-space: nowrap;*/
+    /*}*/
     .content{
         display: flex;
         flex-direction: column;

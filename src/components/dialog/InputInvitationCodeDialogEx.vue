@@ -1,16 +1,16 @@
 <template>
     <base-dialog :visible.sync="showDialog" :is-show-mask="true">
-        <div class="content"   >
-            <div class="title">
+        <div class="content"   ref="content">
+            <div class="title" ref="title">
                 请输入邀请码
             </div>
-            <h-input placeholder="邀请码:"  @hblur="handleBlur" :value.sync="code" class="input" @hsubmit="handleSubmit"/>
+            <h-input placeholder="邀请码:"  @hblur="handleBlur" :value.sync="code" class="input" @hsubmit="handleSubmit" ref="input"/>
 
             <div class="btn-group">
                 <h-button @click="handleSubmit" ref="subbtn">
                     提交
                 </h-button>
-                <h-button @click="handleReturn">
+                <h-button @click="handleReturn" ref="button2">
                     返回
                 </h-button>
 
@@ -24,6 +24,9 @@
     import BaseDialog from "./BaseDialog";
     import HButton from "../HButton";
     import HInput from "../HInput";
+    import {getFontsize} from "../../utils/common";
+    import {needAdjust , adjustRatio} from "../../utils/ratio-convert";
+    import $ from 'jquery'
     export default {
         name: "InputInvitationCodeDialogEx",
         components: {HInput, HButton, BaseDialog},
@@ -38,6 +41,27 @@
                 default:false
             }
         },
+        watch:{
+            visible(v){
+                if(v){
+                    this.$nextTick(()=>{
+                        const body = this.$refs.content
+                        const title =  this.$refs.title
+                        const input =  this.$refs.input.$el
+                        const button1 =  this.$refs.subbtn.$el
+                        const button2 =  this.$refs.button2.$el
+
+                        const bodyW = $(body).width() ,
+                            bodyH = $(body).height() ,
+                            btnW = $(button1).width()
+
+                        if(needAdjust(bodyW , btnW , 2)){
+                            adjustRatio(this.$options.name , bodyW , bodyH , title , input , button1 , button2)
+                        }
+                    })
+                }
+            }
+        },
         computed:{
             showDialog: {
                 set(v) {
@@ -47,6 +71,9 @@
                     return this.visible
                 }
             },
+        },
+        mounted(){
+
         },
         methods:{
             handleBlur(e) {
@@ -79,6 +106,9 @@
 <style scoped lang="scss">
     @import "../../css/common";
     @import "../../css/media";
+    .title{
+        white-space: nowrap;
+    }
     .content{
         display: flex;
         flex-direction: column;

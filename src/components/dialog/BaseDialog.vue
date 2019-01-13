@@ -114,7 +114,7 @@
         z-index: 100;
         .dialog-content{
             flex: 1;
-            margin: 0 4.5rem;
+            margin: 0 2.5rem;
             min-width: 100px;
             z-index: 100;
             .dialog-title{

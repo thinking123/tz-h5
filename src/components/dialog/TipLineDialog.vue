@@ -2,9 +2,9 @@
 
 <template>
     <base-dialog :visible.sync="showDialog" :isShowMask="isShowMask">
-        <div class="content">
+        <div class="content" ref="content">
             <div class="content-wrap">
-                <div  class="title">
+                <div  class="title" ref="title">
                     {{title}}
                 </div>
                 <div class="line">
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="btn-group" v-show="isShowButton">
-                <h-button @click="handleReturn">
+                <h-button @click="handleReturn" ref="subbtn">
                     返回
                 </h-button>
             </div>
@@ -27,7 +27,8 @@
 <script>
     import BaseDialog from "./BaseDialog";
     import HButton from "../HButton";
-
+    import {needAdjust , adjustRatio} from "../../utils/ratio-convert";
+    import $ from 'jquery'
     export default {
         name: "TipLineDialog",
         components: {HButton, BaseDialog},
@@ -46,6 +47,27 @@
             },
             title:String,
             tip:String,
+        },
+        watch:{
+            visible(v){
+                if(v){
+                    this.$nextTick(()=>{
+                        const body = this.$refs.content
+                        const title =  this.$refs.title
+                        // const input =  this.$refs.input.$el
+                        const button1 =  this.$refs.subbtn.$el
+                        // const button2 =  this.$refs.button2.$el
+
+                        const bodyW = $(body).width() ,
+                            bodyH = $(body).height() ,
+                            btnW = $(button1).width()
+
+                        if(needAdjust(bodyW , btnW , 2)){
+                            adjustRatio(this.$options.name , bodyW , bodyH , title , null , button1 , null , true)
+                        }
+                    })
+                }
+            }
         },
         computed:{
             showDialog: {

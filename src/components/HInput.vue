@@ -118,7 +118,8 @@
         color: $white;
         font-weight: $font-weight;
         font-size: $font-size;
-
+        /*padding-bottom: 5px;*/
+        /*padding-left: 10px;*/
     }
 
     .input {
@@ -131,6 +132,7 @@
         background: transparent;
         height: 3rem;
         color: $white;
+        text-indent: 12px;
         /*font-weight: bolder;*/
         /*font-size: large;*/
 

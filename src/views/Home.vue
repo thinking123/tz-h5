@@ -212,6 +212,7 @@
                 this.scrollToForIphone6()
             },
             handleItemLoaded({index , ref}){
+                //todo is awalys eight?? or index === (this.items.length - 1)
                 if(index === 8 && ref){
                     const pw = 0.256
                     const ph = 0.175
@@ -414,19 +415,28 @@
 
         }
 
-        @include range-media(1, 4) {
+        @include range-media(1, 2) {
             .home-content {
-                margin-top: 180px;
-            }
-            .msg {
-                color: red;
-
-                &::before {
-                    content: '1-4';
-                }
+                margin-top: 150px;
             }
         }
 
+        @include range-media(3, 4) {
+            .home-content {
+                margin-top: 170px;
+            }
+        }
+
+        @include range-media(5, 6) {
+            .home-content {
+                margin-top: 190px;
+            }
+        }
+        @include range-media(7, 8) {
+            .home-content {
+                margin-top: 210px;
+            }
+        }
         @include use-media($iphone4) {
             .home-content {
                 margin-top: 160px;
