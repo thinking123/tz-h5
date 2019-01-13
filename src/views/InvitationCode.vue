@@ -53,7 +53,7 @@
                 try {
                     const c = await this.checkInvitationCode(code)
                     if (c != 0) {
-                        this.$router.push({path: 'register'})
+                        this.$router.push({path: '/register'})
                     } else {
                         this.showErrorCode = true
                     }

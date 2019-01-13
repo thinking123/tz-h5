@@ -81,7 +81,7 @@
             ]),
             handlePrize() {
                 if(this.user.state != 0){
-                    this.$router.push({path: 'prize-page'})
+                    this.$router.push({path: '/prize-page'})
                 }else{
                     this.showTip = true
                 }
@@ -90,7 +90,7 @@
                 this.$router.push({path: '/'})
             },
             handleToZone() {
-                this.$router.push({path: 'site-info'})
+                this.$router.push({path: '/site-info'})
             },
             async init() {
                 try {

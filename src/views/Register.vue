@@ -37,7 +37,7 @@
         </div>
 
         <div class="error" v-if="err" slot="error">
-            {{err}}
+            {{err}} : {{msg}}
         </div>
 
 
@@ -140,6 +140,20 @@
                     this.msg = `bh:${this.bodyHeight}`
                 }, 500)
             }
+
+            // setTimeout(()=>{
+            //     var _originalSize = $(window).width() + $(window).height()
+            //     $(window).resize(function(){
+            //         if($(window).width() + $(window).height() != _originalSize){
+            //             this.msg = 'keybord up'
+            //             alert('d')
+            //         }else{
+            //             this.msg = 'keybord down'
+            //         }
+            //     });
+            // } , 500)
+
+
         },
         methods: {
             ...mapActions([
@@ -147,12 +161,19 @@
             ]),
             scrollToForIphone6() {
                 if (isIphone6()) {
-                    alert('iphone6 scroll')
+                    // alert('iphone6 scroll')
+                    // this.err = 'iphone6 scroll'
                     setTimeout(function () {
                         var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
                         window.scrollTo(0, Math.max(scrollHeight - 1, 0));
                     }, 100);
                 }
+
+                // setTimeout(()=>{
+                //     $(window).scrollTop(0,0);
+                // } , 100)
+
+
 
             },
             handleFocus(e) {
@@ -164,11 +185,15 @@
 
             },
             handleBlur(e) {
+                // this.err = typeof e == 'string' ? e : 'blur'
+                // alert('b')
                 // alert('blur')
                 // setTimeout(function () {
                 //     var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
                 //     window.scrollTo(0, Math.max(scrollHeight - 1, 0));
                 // }, 100);
+
+                this.scrollToForIphone6()
             },
             handleSample() {
                 this.showSample = true
@@ -176,7 +201,7 @@
             goToPersonCenter() {
                 const t = setTimeout(() => {
                     this.isOk = false
-                    this.$router.push({path: 'person-center'})
+                    this.$router.push({path: '/person-center'})
                     clearTimeout(t)
                 }, 2000)
             },
@@ -184,7 +209,7 @@
                 this.form.userHead = url
             },
             handleReturn() {
-                this.$router.push({path: 'person-center'})
+                this.$router.push({path: '/person-center'})
             },
             verify() {
                 let err = ''

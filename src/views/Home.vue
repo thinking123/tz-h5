@@ -1,9 +1,9 @@
 <template>
     <div class="home-page">
         <!--<splash-page/>-->
-        <splash-page :visible="isShowSplash" :remain-time="remainTime"/>
+        <splash-page :visible="isShowSplash" :remain-time="remainTime" v-if="isShowSplash"/>
 
-        <div class="home-content">
+        <div class="home-content" v-else>
             <div class="content-wrap">
                 <title-item v-for="(item ,index) in items"
                             :content="item.linkName" :src="item.linkName"
@@ -83,9 +83,9 @@
                 let res = this.links.map(m => {
                     let r = {...m}
                     if (m.linkName == '注册报名') {
-                        r = {...r, path: 'invitation-code'}
+                        r = {...r, path: '/invitation-code'}
                     } else if (m.linkName == '个人中心') {
-                        r = {...r, path: 'person-center'}
+                        r = {...r, path: '/person-center'}
                     }
                     return r
                 })
@@ -99,7 +99,7 @@
 
                 const reg = {
                     linkName: '注册报名',
-                        path: "invitation-code",
+                        path: "/invitation-code",
                         state: 1,
                         sort: 3
                 }
@@ -109,7 +109,7 @@
                 res = [...res,{
                     linkName: '个人中心',
                     state: 1,
-                    path: "person-center",
+                    path: "/person-center",
                     sort: 9
                 } ]
 
@@ -128,13 +128,13 @@
             handleItemClick(item) {
                 if (item.state == 1) {
                     if(item.path){
-                        if (item.path == 'person-center') {
+                        if (item.path == '/person-center') {
                             if(this.user){
                                 this.$router.push({path: item.path})
                             }else{
                                 this.showRegTipReg = true
                             }
-                        } else  if (item.path == 'invitation-code'){
+                        } else  if (item.path == '/invitation-code'){
                             if(this.user){
                                 this.showHadTipReg = true
                             }else{
@@ -200,7 +200,7 @@
                         // setTimeout(()=>{
                         //
                         // } , 1000)
-                        this.$router.push({path: 'register'})
+                        this.$router.push({path: '/register'})
 
                     } else {
                         this.showErrorCode = true

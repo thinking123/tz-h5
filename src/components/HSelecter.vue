@@ -11,7 +11,8 @@
         <img class="tran" src="../assets/trangle.png"/>
         <select class="input"  @change="handleChange"
                 @focus="handleFocus"
-                :value="v.value" :placeholder="placeholder" @blur="handleBlur">
+                ref="input"
+                :value="v.value" :placeholder="placeholder" >
             <!--<h-select-item :content="item.content" v-for="item in items" @click.native="handleItemClick(item)" :is-active="current && item.key == current.key"/>-->
             <option v-for="item in items" class="option" :key="item.value">
                 {{item.value}}
@@ -22,6 +23,7 @@
 
 <script>
     // import HSelectItem from "./HSelectItem";
+    import $ from 'jquery'
     export default {
         name: "HSelecter",
         // components: {HSelectItem},
@@ -49,11 +51,17 @@
                 }
             },
         },
+        mounted(){
+            $(this.$refs.input).blur(e=>{
+                this.$emit('hblur', 'by select')
+            })
+        },
         methods:{
             handleChange(e){
                 this.v = this.items.find(f=>{
                     return f.value == e.target.value
                 })
+                // this.$emit('hblur', e)
                 // this.v = e.target.value
             },
             handleItemClick(item){

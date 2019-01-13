@@ -4,9 +4,7 @@ let user = localStorage.getItem('user')
 if(user){
     user = JSON.parse(user)
 }
-if(!invitationCode){
-    invitationCode = 'test'
-}
+
 export default {
     isLoaded:false,
     openid:openid ? openid : null,

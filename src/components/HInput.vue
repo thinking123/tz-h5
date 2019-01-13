@@ -8,12 +8,13 @@
         </div>
 
         <input ref="input" class="input" @change="handleChange" :value="v" :placeholder="placeholder"
-               @focus="handleFocus" @blur="handleBlur"/>
+               @focus="handleFocus" />
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex'
+    import $ from "jquery";
 
     export default {
         name: "HInput",
@@ -30,6 +31,11 @@
                 default: false
             },
             placeholder: String
+        },
+        mounted(){
+            $(this.$refs.input).blur(e=>{
+                this.$emit('hblur', e)
+            })
         },
         computed: {
             v: {

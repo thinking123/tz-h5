@@ -3,9 +3,9 @@
         <div class="mask"  @touchmove="touchMove">
 
         </div>
-        <div class="dialog-content">
+        <div class="dialog-content"  @touchmove="touchMove">
             <div class="dialog-title">
-                <span class="dialog-btn" @touchstart="handleClose"/>
+                <span class="dialog-btn" @click="handleClose"/>
             </div>
             <div class="dialog-body">
                 <div class="body">
