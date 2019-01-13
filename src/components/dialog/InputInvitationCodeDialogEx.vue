@@ -7,7 +7,7 @@
             <h-input placeholder="邀请码:"  @hblur="handleBlur" :value.sync="code" class="input" @hsubmit="handleSubmit"/>
 
             <div class="btn-group">
-                <h-button @click="handleSubmit">
+                <h-button @click="handleSubmit" ref="subbtn">
                     提交
                 </h-button>
                 <h-button @click="handleReturn">
@@ -56,6 +56,11 @@
                 this.showDialog = false
             },
             handleSubmit(){
+
+                // if(this.$refs.subbtn){
+                //     this.$refs.subbtn.$el.focus()
+                //     // alert('f')
+                // }
 
                 this.$emit('submit' , this.code)
             },

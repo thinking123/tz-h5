@@ -102,6 +102,7 @@
                     // const fixedImg = await this.fixDirection(img)
                     const  [fixedImg , image]  = await this.fixDirection(img)
 
+
                     const convertImage = this.base64ToFile(fixedImg , this.$refs.file.files[0].name)
 
                     const formData = new FormData();
@@ -109,10 +110,14 @@
                     // const file = this.$refs.file.files[0]
                     // formData.append("file", fixedImg);
                     this.imgSrc = fixedImg
+                    // alert('load')
                     const url = await uploadFile(formData)
+                    // alert(this.$refs.file.files[0].name)
                     if (url) {
                         console.log(fixedImg)
                         this.imgSrc = fixedImg
+
+                        // alert(url)
                         this.$emit('change', url)
                     }
 

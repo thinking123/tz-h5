@@ -57,6 +57,7 @@
                 if(e.keyCode == 13){
                     if(!this.loading){
                         e.preventDefault()
+                        e.stopPropagation()
                         this.$emit('hsubmit' ,e)
                     }
 

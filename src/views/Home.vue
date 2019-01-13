@@ -1,6 +1,9 @@
 <template>
     <div class="home-page">
         <!--<splash-page/>-->
+        <!--<img class="home-bg" v-if="!isShowSplash" src="../assets/view/home.png">-->
+
+        <!--</img>-->
         <splash-page :visible="isShowSplash" :remain-time="remainTime" v-if="isShowSplash"/>
 
         <div class="home-content" v-else>
@@ -191,7 +194,7 @@
                 }
             },
             handleBlur(e) {
-                this.scrollToForIphone6()
+                // this.scrollToForIphone6()
             },
             async init() {
                 try {
@@ -282,6 +285,16 @@
     }
 
 
+    .home-bg{
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
     .home-page {
         background-image: url("../assets/view/home.png");
         background-size: 100% 100%;
@@ -292,8 +305,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-
-
+        /*z-index: 1;*/
         /* Full height */
         height: 100%;
 

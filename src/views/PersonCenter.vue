@@ -1,6 +1,9 @@
 <template>
     <view-wrap title="我的信息">
         <div class="content" v-if="user">
+            <!--<div>-->
+                <!--{{user.userHead}}-->
+            <!--</div>-->
             <img :src="user.userHead" class="icon"/>
             <div class="item-wrap">
                 <div class="one-line">
