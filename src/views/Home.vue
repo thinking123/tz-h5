@@ -9,7 +9,7 @@
         <div class="home-content" v-else ref="hcontent">
             <!--<div v-if="msg" style="font-size: 20px" class="msg">-->
 
-                <!--{{msg}} - {{ios}}-->
+                <!--{{msg}}-->
             <!--</div>-->
             <div class="content-wrap">
                 <title-item v-for="(item ,index) in items"
@@ -65,7 +65,7 @@
         },
         data() {
             return {
-                msg: 'default css',
+                msg: 'size:',
                 ios: '',
                 isShowSplash: false,
                 showRegTipReg: false,
@@ -258,6 +258,8 @@
             // },
             async init() {
                 try {
+
+                    const isNotShowSplash = this.$route.query.show == 1
                     this.scrollToForIphone6()
                     // if (!isIphone()) {
                     //     setTimeout(() => {
@@ -267,7 +269,13 @@
                     //     }, 500)
                     // }
 
-                    this.showSplash()
+                    if(isNotShowSplash){
+                        this.setLoaded(true)
+                        this.setPlayMusic(true)
+                    }else{
+                        this.showSplash()
+                    }
+
                     await this.getLink()
 
                     // this.$nextTick(() => {
@@ -417,30 +425,66 @@
 
         @include range-media(1, 2) {
             .home-content {
-                margin-top: 150px;
+                margin-top: 165px;
+            }
+
+            .msg {
+                color: salmon;
+
+                &::before {
+                    content: '1-2 med';
+                }
             }
         }
 
         @include only-media(3) {
             .home-content {
-                margin-top: 170px;
+                margin-top: 200px;
+            }
+            .msg {
+                color: salmon;
+
+                &::before {
+                    content: '3 med';
+                }
             }
         }
 
         @include only-media(4) {
             .home-content {
-                margin-top: 220px;
+                margin-top: 230px;
+            }
+            .msg {
+                color: salmon;
+
+                &::before {
+                    content: '4 med';
+                }
             }
         }
         @include only-media(5) {
             .home-content {
                 margin-top: 260px;
             }
+            .msg {
+                color: salmon;
+
+                &::before {
+                    content: '5 med';
+                }
+            }
         }
 
         @include range-media(6, 8) {
             .home-content {
-                margin-top: 280px;
+                margin-top: 290px;
+            }
+            .msg {
+                color: salmon;
+
+                &::before {
+                    content: '6-8 med';
+                }
             }
         }
 
