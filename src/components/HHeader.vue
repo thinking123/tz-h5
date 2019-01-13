@@ -53,6 +53,7 @@
                 // alert('play music first')
                 const m = this.$refs.music
                 this.setPlayMusic(true)
+                // m.play().catch(err=>alert(err.message)) ;
                 m.play().catch(err=>alert(err.message)) ;
                 // document.addEventListener("WeixinJSBridgeReady", function () {
                 //     audio.play();

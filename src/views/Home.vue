@@ -18,7 +18,7 @@
         <tip-line-dialog :visible.sync="showHadTipReg" title="您已报名成功" tip="请去个人中心查看您的报名信息" :is-show-button="false"/>
 
 
-        <input-invitation-code-dialog-ex :visible.sync="showCode" @submit="handleSubmit"/>
+        <input-invitation-code-dialog-ex   @hblur="handleBlur" :visible.sync="showCode" @submit="handleSubmit"/>
         <tip-dialog-ex :visible.sync="showErrorCode" title="您输入的邀请码有误请重新输入" :is-show-mask="true"/>
     </div>
 </template>
@@ -40,6 +40,7 @@
     import TipLineDialog from "../components/dialog/TipLineDialog";
     import TipDialogEx from "../components/dialog/TipDialogEx";
     import InputInvitationCodeDialogEx from "../components/dialog/InputInvitationCodeDialogEx";
+    import {getOS ,isIphone , isIphone6} from "../utils/common";
 
     const SPLASHTIME = 3000
     export default {
@@ -158,6 +159,15 @@
                 }
 
             },
+            scrollToForIphone6() {
+                if (isIphone6()) {
+                    setTimeout(function () {
+                        var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                        window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+                    }, 100);
+                }
+
+            },
             tick(){
                 this.remainTime--
                 if(this.remainTime <= 0){
@@ -180,8 +190,20 @@
                     // }, SPLASHTIME)
                 }
             },
+            handleBlur(e) {
+                this.scrollToForIphone6()
+            },
             async init() {
                 try {
+                    this.scrollToForIphone6()
+                    // if (!isIphone()) {
+                    //     setTimeout(() => {
+                    //
+                    //         this.bodyHeight = $('body').height();
+                    //         // this.msg = `bh:${this.bodyHeight}`
+                    //     }, 500)
+                    // }
+
                     this.showSplash()
                     await this.getLink()
                     if(this.openid){
@@ -266,9 +288,18 @@
         background-repeat: no-repeat;
         height: 100%;
         width: 100%;
+        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
+
+
+        /* Full height */
+        height: 100%;
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-size: cover;
 
         .home-content {
             display: flex;

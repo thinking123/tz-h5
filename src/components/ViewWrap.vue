@@ -121,14 +121,14 @@
     @include use-media($iphone5, $iphone6){
         .title-wrap {
             font-weight: bolder;
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             margin-top: 1.3rem;
         }
         .line {
             width: 2.8rem;
         }
         .wrap-content {
-            margin-top: 16rem;
+            margin-top: 15rem;
         }
         .title {
             margin: 0 0.8rem;

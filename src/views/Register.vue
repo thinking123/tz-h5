@@ -20,14 +20,17 @@
 
             <h-input placeholder="姓名:" :value.sync="form.userName" class="input"
                      @hblur="handleBlur"
-                     @hfocus="handleFocus" :autofocus="true"/>
+                     @hsubmit="handleSubmit"
+                     @hfocus="handleFocus" />
             <h-input placeholder="手机:" :value.sync="form.userPhone" class="input"
                      @hblur="handleBlur"
+                     @hsubmit="handleSubmit"
                      @hfocus="handleFocus"/>
             <!--<h-input placeholder="单位:" :value.sync="form.userCompany" class="input"-->
                      <!--@hblur="handleBlur"-->
                      <!--@hfocus="handleFocus"/>-->
-            <h-selecter placeholder="座位区:" :value.sync="form.zone" :items="items" @hfocus="handleFocus"
+            <h-selecter placeholder="座位区:"
+                        :value.sync="form.zone" :items="items" @hfocus="handleFocus"
                         @hblur="handleBlur"/>
             <div class="btn">
                 <h-button @click="handleSubmit">
@@ -140,18 +143,6 @@
                     this.msg = `bh:${this.bodyHeight}`
                 }, 500)
             }
-
-            // setTimeout(()=>{
-            //     var _originalSize = $(window).width() + $(window).height()
-            //     $(window).resize(function(){
-            //         if($(window).width() + $(window).height() != _originalSize){
-            //             this.msg = 'keybord up'
-            //             alert('d')
-            //         }else{
-            //             this.msg = 'keybord down'
-            //         }
-            //     });
-            // } , 500)
 
 
         },
@@ -345,16 +336,16 @@
 
     @include use-media($iphone5, $iphone6) {
         .sample {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
         .tip {
-            font-size: 1rem;
-            margin-bottom: 0.8rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
         }
 
         .btn {
             & > * {
-                width: 15rem;
+                width: 13rem;
             }
         }
         .form {

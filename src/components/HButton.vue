@@ -88,23 +88,19 @@
 
     @include range-media(1, 4) {
         .btn {
-            font-size: 1.8rem;
-            font-weight: bold;
-            font-family: $font-family;
-
+            font-size: 2rem;
+            font-weight: bolder;
         }
         .wrap {
-            width:8rem;
-            height: 2.5rem;
+            width:9rem;
+            height: 3rem;
         }
     }
 
     @include range-media(5, 8) {
         .btn {
             font-size: 2rem;
-            font-weight: bold;
-            font-family: $font-family;
-
+            font-weight: bolder;
         }
         .wrap {
             width:9rem;
@@ -114,24 +110,23 @@
 
     @include use-media($iphone4) {
         .btn {
-            font-size: $font-size-base;
-            font-weight: bold;
-            font-family: $font-family;
+            font-size: 1.4rem;
+            font-weight: bolder;
         }
         .wrap {
-            width: 18rem;
-            height: $btn-h;
+            width:7.5rem;
+            height: 2.3rem;
         }
     }
 
     @include use-media($iphone5, $iphone6) {
         .btn {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: bolder;
         }
         .wrap {
-            width:8.5rem;
-            height: 2.8rem;
+            width:8rem;
+            height: 2.6rem;
         }
     }
 

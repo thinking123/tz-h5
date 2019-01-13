@@ -4,7 +4,7 @@
             <!--<div class="item" v-if="user">-->
             <!--电影券兑换码:{{user.movieCode }}-->
             <!--</div>-->
-            <div class="item">
+            <div class="item no-wrap">
                 电影券兑换码:{{user ? user.movieCode : '' }}
             </div>
             <h-card title="电影券使用方法" :footer="footer">
@@ -74,6 +74,9 @@
     @import "../css/common";
     @import "../css/media";
 
+    .no-wrap{
+        white-space: nowrap;
+    }
 
     .content {
         display: flex;

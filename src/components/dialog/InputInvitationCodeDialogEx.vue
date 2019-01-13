@@ -4,7 +4,7 @@
             <div class="title">
                 请输入邀请码
             </div>
-            <h-input placeholder="邀请码:" :value.sync="code" class="input"/>
+            <h-input placeholder="邀请码:"  @hblur="handleBlur" :value.sync="code" class="input" @hsubmit="handleSubmit"/>
 
             <div class="btn-group">
                 <h-button @click="handleSubmit">
@@ -49,6 +49,9 @@
             },
         },
         methods:{
+            handleBlur(e) {
+                this.$emit('hblur', e)
+            },
             handleReturn(){
                 this.showDialog = false
             },

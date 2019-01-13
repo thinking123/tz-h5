@@ -7,8 +7,8 @@
 
         </div>
 
-        <input ref="input" class="input" @change="handleChange" :value="v" :placeholder="placeholder"
-               @focus="handleFocus" />
+        <input ref="input" class="input" v-model="v" :placeholder="placeholder"
+               @focus="handleFocus" @keydown="handleKeyDown"/>
     </div>
 </template>
 
@@ -19,7 +19,7 @@
     export default {
         name: "HInput",
         computed: {
-            ...mapGetters(['isAndroid'])
+            ...mapGetters(['isAndroid' , 'loading'])
         },
         props: {
             value: {
@@ -36,6 +36,10 @@
             $(this.$refs.input).blur(e=>{
                 this.$emit('hblur', e)
             })
+
+            // $(this.$refs.input).change(e=>{
+            //     this.$emit('hblur', e)
+            // })
         },
         computed: {
             v: {
@@ -48,6 +52,16 @@
             },
         },
         methods: {
+            handleKeyDown(e){
+                // alert(e.keyCode)
+                if(e.keyCode == 13){
+                    if(!this.loading){
+                        e.preventDefault()
+                        this.$emit('hsubmit' ,e)
+                    }
+
+                }
+            },
             handleChange(e) {
                 this.v = e.target.value
             },
@@ -172,7 +186,7 @@
 
     @include use-media($iphone4) {
         .input{
-            height: 2.5rem;
+            height: 3.3rem;
             font-weight: bold;
             font-size: initial;
         }
@@ -184,24 +198,24 @@
     }
     @include use-media($iphone5, $iphone6) {
         .input{
-            height: 3rem;
+            height: 3.3rem;
             font-weight: bolder;
-            font-size: large;
+            font-size: 1.6rem;
         }
         ::placeholder {
             font-weight: bolder;
-            font-size: large
+            font-size: 1.6rem
         }
     }
     @include use-media($iphone-p) {
         .input{
             height: 3.5rem;
             font-weight: bolder;
-            font-size: large;
+            font-size: 1.8rem;
         }
         ::placeholder {
             font-weight: bolder;
-            font-size: large;
+            font-size: 1.8rem;
         }
 
     }
@@ -209,11 +223,11 @@
         .input{
             height: 3.5rem;
             font-weight: bolder;
-            font-size: large;
+            font-size: 1.8rem;
         }
         ::placeholder {
             font-weight: bolder;
-            font-size: large;
+            font-size: 1.8rem;
         }
     }
 

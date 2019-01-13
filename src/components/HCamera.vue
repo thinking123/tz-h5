@@ -30,7 +30,7 @@
 
                 return new Promise((resolve, reject) => {
                     fixOrientation(url, {image: true}, function (fixed, image) {
-                        resolve(fixed)
+                        resolve([fixed , image])
                     });
                 })
 
@@ -48,8 +48,30 @@
                     // self.testImage(e.target.result)
                 }
             },
+            base64ToFile(dataurl , filename){
+                // var img_b64 = canvas.toDataURL('image/png');
+                // var png = img_b64.split(',')[1];
+                //
+                // var the_file = new Blob([window.atob(png)],  {type: 'image/png', encoding: 'utf-8'});
+                //
+                // var fr = new FileReader();
+                // fr.onload = function ( oFREvent ) {
+                //     var v = oFREvent.target.result.split(',')[1]; // encoding is messed up here, so we fix it
+                //     v = atob(v);
+                //     var good_b64 = btoa(decodeURIComponent(escape(v)));
+                //     document.getElementById("uploadPreview").src = "data:image/png;base64," + good_b64;
+                // };
+                // fr.readAsDataURL(the_file);
+                var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                while(n--){
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                return new File([u8arr], filename, {type:mime});
+            },
+
             async testImage(img) {
-                const fixedImg = await this.fixDirection(img)
+                const [fixedImg , image] = await this.fixDirection(img)
 
                 const formData = new FormData();
                 formData.append("file", new Blob([fixedImg]))
@@ -64,43 +86,62 @@
             },
             async _uploadFile(img) {
                 try {
-                    const formData = new FormData();
-                    const file = this.$refs.file.files[0]
-                    formData.append("file", file);
+                    // const formData = new FormData();
+                    // const file = this.$refs.file.files[0]
+                    // formData.append("file", file);
+                    //
+                    // const url = await uploadFile(formData)
+                    // if (url) {
+                    //     this.imgSrc = img
+                    //     this.$emit('change', url)
+                    // }
+                    // return
 
+
+
+                    // const fixedImg = await this.fixDirection(img)
+                    const  [fixedImg , image]  = await this.fixDirection(img)
+
+                    const convertImage = this.base64ToFile(fixedImg , this.$refs.file.files[0].name)
+
+                    const formData = new FormData();
+                    formData.append("file", convertImage)
+                    // const file = this.$refs.file.files[0]
+                    // formData.append("file", fixedImg);
+                    this.imgSrc = fixedImg
                     const url = await uploadFile(formData)
                     if (url) {
-                        this.imgSrc = img
+                        console.log(fixedImg)
+                        this.imgSrc = fixedImg
                         this.$emit('change', url)
                     }
-                    return
 
-                    if (this.isAndroid) {
-                        const fixedImg = await this.fixDirection(img)
-
-                        const formData = new FormData();
-                        formData.append("file", new Blob([fixedImg]))
-                        // const file = this.$refs.file.files[0]
-                        // formData.append("file", fixedImg);
-
-                        const url = await uploadFile(formData)
-                        if (url) {
-                            this.imgSrc = fixedImg
-                            this.$emit('change', url)
-                        }
-                    } else {
-                        const formData = new FormData();
-                        const file = this.$refs.file.files[0]
-                        formData.append("file", file);
-
-                        const url = await uploadFile(formData)
-                        if (url) {
-                            this.imgSrc = img
-                            this.$emit('change', url)
-                        }
-
-
-                    }
+                    // if (this.isAndroid) {
+                    //     const fixedImg = await this.fixDirection(img)
+                    //
+                    //     const formData = new FormData();
+                    //     formData.append("file", new Blob([fixedImg]))
+                    //     // const file = this.$refs.file.files[0]
+                    //     // formData.append("file", fixedImg);
+                    //
+                    //     const url = await uploadFile(formData)
+                    //     if (url) {
+                    //         this.imgSrc = fixedImg
+                    //         this.$emit('change', url)
+                    //     }
+                    // } else {
+                    //     const formData = new FormData();
+                    //     const file = this.$refs.file.files[0]
+                    //     formData.append("file", file);
+                    //
+                    //     const url = await uploadFile(formData)
+                    //     if (url) {
+                    //         this.imgSrc = img
+                    //         this.$emit('change', url)
+                    //     }
+                    //
+                    //
+                    // }
 
 
                 } catch (e) {
@@ -143,21 +184,37 @@
     }
 
     $step:0.5;
-    @include all-media(($iphone4) , 1,3){
+
+
+    @include range-media(1, 4) {
         .wrap {
-            width: $camera - $step;
-            height: $camera -$step;
-        }
-    }
-    @include all-media(($iphone5, $iphone6) , 4,6){
-        .wrap {
-            width: $camera - $step;
-            height: $camera -$step;
+            width: 7rem;
+            height: 6.5rem;
         }
     }
 
+    @include range-media(5, 8) {
+        .wrap {
+            width: 7rem;
+            height: 6.5rem;
+        }
+    }
 
-    @include all-media(($iphone-p , $iphonex),7, 8) {
+    @include use-media($iphone4) {
+        .wrap {
+            width: 7rem;
+            height: 6.5rem;
+        }
+    }
+
+    @include use-media($iphone5, $iphone6) {
+        .wrap {
+            width: 6rem;
+            height: 5.5rem;
+        }
+    }
+
+    @include use-media($iphone-p, $iphonex) {
         .wrap {
             width: 7rem;
             height: 6.5rem;
