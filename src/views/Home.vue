@@ -421,22 +421,29 @@
             }
         }
 
-        @include range-media(3, 4) {
+        @include only-media(3) {
             .home-content {
                 margin-top: 170px;
             }
         }
 
-        @include range-media(5, 6) {
+        @include only-media(4) {
             .home-content {
-                margin-top: 190px;
+                margin-top: 220px;
             }
         }
-        @include range-media(7, 8) {
+        @include only-media(5) {
             .home-content {
-                margin-top: 210px;
+                margin-top: 260px;
             }
         }
+
+        @include range-media(6, 8) {
+            .home-content {
+                margin-top: 280px;
+            }
+        }
+
         @include use-media($iphone4) {
             .home-content {
                 margin-top: 160px;

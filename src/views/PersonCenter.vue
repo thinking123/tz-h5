@@ -22,11 +22,17 @@
                 <img :src="siteBg" class="img-str"/>
             </h-card>
             <div class="btn-group person-center-btn">
-                <h-button @click="handlePrize">
-                    我的奖品信息
+                <h-button @click="handlePrize" >
+                    <span class="button-text">
+                            我的奖品信息
+                    </span>
+
                 </h-button>
                 <h-button @click="handleReturn">
-                    返回首页
+                    <span class="button-text">
+                          返回首页
+                    </span>
+
                 </h-button>
             </div>
 
@@ -188,12 +194,21 @@
             font-size: larger;
         }
     }
+    .button-text{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     @include range-media(1,3){
         .btn-group {
             margin-top: 1rem;
             & > * {
                 width: 10rem;
             }
+        }
+
+        .button-text{
+            font-size: 1.3rem;
         }
     }
     @include range-media(4,6){
@@ -202,6 +217,9 @@
             & > * {
                 width: 10rem;
             }
+        }
+        .button-text{
+            font-size: 1.4rem;
         }
     }
 
@@ -212,6 +230,9 @@
                 width: 10rem;
             }
         }
+        .button-text{
+            font-size: 1.5rem;
+        }
     }
     @include use-media($iphone4){
         .btn-group {
@@ -219,6 +240,9 @@
             & > * {
                 width: 10rem;
             }
+        }
+        .button-text{
+            font-size: 1.1rem;
         }
     }
 
@@ -230,6 +254,10 @@
                 width: 11rem;
             }
         }
+
+        .button-text{
+            font-size: 1.2rem;
+        }
     }
 
     @include use-media($iphone-p, $iphonex){
@@ -238,6 +266,9 @@
             & > * {
                 width: 12rem;
             }
+        }
+        .button-text{
+            font-size: 1.3rem;
         }
     }
 
