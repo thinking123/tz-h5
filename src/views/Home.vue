@@ -6,22 +6,27 @@
         <!--</img>-->
         <splash-page :visible="isShowSplash" :remain-time="remainTime" v-if="isShowSplash"/>
 
-        <div class="home-content" v-else>
+        <div class="home-content" v-else ref="hcontent">
+            <!--<div v-if="msg" style="font-size: 20px" class="msg">-->
+
+                <!--{{msg}} - {{ios}}-->
+            <!--</div>-->
             <div class="content-wrap">
                 <title-item v-for="(item ,index) in items"
                             :content="item.linkName" :src="item.linkName"
                             :key="item.id" :title="titles[index].title"
                             :tip="titles[index].tip"
                             :index="index"
-                            @click.native="handleItemClick(item)"/>
+                            @item-loaded="handleItemLoaded"
+                            @click.native="handleItemClick(item)" ref="item"/>
             </div>
         </div>
-        <tip-dialog-ex  :visible.sync="showTip" title="敬请期待"/>
-        <tip-line-dialog :visible.sync="showRegTipReg" title="请先填写报名信息"  />
+        <tip-dialog-ex :visible.sync="showTip" title="敬请期待"/>
+        <tip-line-dialog :visible.sync="showRegTipReg" title="请先填写报名信息"/>
         <tip-line-dialog :visible.sync="showHadTipReg" title="您已报名成功" tip="请去个人中心查看您的报名信息" :is-show-button="false"/>
 
 
-        <input-invitation-code-dialog-ex   @hblur="handleBlur" :visible.sync="showCode" @submit="handleSubmit"/>
+        <input-invitation-code-dialog-ex @hblur="handleBlur" :visible.sync="showCode" @submit="handleSubmit"/>
         <tip-dialog-ex :visible.sync="showErrorCode" title="您输入的邀请码有误请重新输入" :is-show-mask="true"/>
     </div>
 </template>
@@ -43,8 +48,8 @@
     import TipLineDialog from "../components/dialog/TipLineDialog";
     import TipDialogEx from "../components/dialog/TipDialogEx";
     import InputInvitationCodeDialogEx from "../components/dialog/InputInvitationCodeDialogEx";
-    import {getOS ,isIphone , isIphone6} from "../utils/common";
-
+    import {getOS, isIphone, isIphone6 , elementInViewport , getViewport} from "../utils/common";
+    import $ from 'jquery'
     const SPLASHTIME = 3000
     export default {
         name: "Home",
@@ -56,33 +61,36 @@
             InvitationCodeErrorDialog,
             TipCommonDialog,
             TitleAnimation,
-            HadInvitationDialog, InputInfoTipDialog, TipRegisterDialog, TipDialog, TitleItem, SplashPage},
+            HadInvitationDialog, InputInfoTipDialog, TipRegisterDialog, TipDialog, TitleItem, SplashPage
+        },
         data() {
             return {
+                msg: 'default css',
+                ios: '',
                 isShowSplash: false,
                 showRegTipReg: false,
                 showHadTipReg: false,
                 showTip: false,
-                remainTime:3,
+                remainTime: 3,
 
                 showCode: false,
                 showErrorCode: false,
-                titles:[
-                    {title:"大会简介" , tip:"General introduction" },
-                    {title:"会议议程" , tip:"Agenda of the Conference"},
-                    {title:"注册报名" , tip:"Registration" },
-                    {title:"照片直播" , tip:"Photo live broadcast"},
-                    {title:"视频直播" , tip:"Live video"},
-                    {title:"论坛地址" , tip:"Forum address"},
-                    {title:"官网链接" , tip:"Official website"},
-                    {title:"官微链接" , tip:"Official micro"},
-                    {title:"个人中心" , tip:"Personal Center"},
+                titles: [
+                    {title: "大会简介", tip: "General introduction"},
+                    {title: "会议议程", tip: "Agenda of the Conference"},
+                    {title: "注册报名", tip: "Registration"},
+                    {title: "照片直播", tip: "Photo live broadcast"},
+                    {title: "视频直播", tip: "Live video"},
+                    {title: "论坛地址", tip: "Forum address"},
+                    {title: "官网链接", tip: "Official website"},
+                    {title: "官微链接", tip: "Official micro"},
+                    {title: "个人中心", tip: "Personal Center"},
                 ],
 
             }
         },
         computed: {
-            ...mapGetters(['isLoaded', 'user', 'links' , 'openid']),
+            ...mapGetters(['isLoaded', 'user', 'links', 'openid']),
             items() {
                 let res = this.links.map(m => {
                     let r = {...m}
@@ -97,26 +105,25 @@
                 //     return a.sort > b.sort
                 // })
 
-                if(res.length == 0){
+                if (res.length == 0) {
                     return []
                 }
 
                 const reg = {
                     linkName: '注册报名',
-                        path: "/invitation-code",
-                        state: 1,
-                        sort: 3
+                    path: "/invitation-code",
+                    state: 1,
+                    sort: 3
                 }
 
-                res.splice( 2, 0, reg );
+                res.splice(2, 0, reg);
 
-                res = [...res,{
+                res = [...res, {
                     linkName: '个人中心',
                     state: 1,
                     path: "/person-center",
                     sort: 9
-                } ]
-
+                }]
 
 
                 return res
@@ -124,24 +131,24 @@
         },
         methods: {
             ...mapMutations([
-                'setLoaded' , 'setPlayMusic'
+                'setLoaded', 'setPlayMusic'
             ]),
             ...mapActions([
-                'getUser', 'getLink' , 'checkInvitationCode'
+                'getUser', 'getLink', 'checkInvitationCode'
             ]),
             handleItemClick(item) {
                 if (item.state == 1) {
-                    if(item.path){
+                    if (item.path) {
                         if (item.path == '/person-center') {
-                            if(this.user){
+                            if (this.user) {
                                 this.$router.push({path: item.path})
-                            }else{
+                            } else {
                                 this.showRegTipReg = true
                             }
-                        } else  if (item.path == '/invitation-code'){
-                            if(this.user){
+                        } else if (item.path == '/invitation-code') {
+                            if (this.user) {
                                 this.showHadTipReg = true
-                            }else{
+                            } else {
 
                                 this.showCode = true
                                 //不需要邀请码，直接到注册哪里
@@ -149,11 +156,11 @@
                                 return
                                 // this.$router.push({path: item.path})
                             }
-                        }else {
+                        } else {
                             this.$router.push({path: item.path})
                         }
 
-                    }else if(item.linkUrl){
+                    } else if (item.linkUrl) {
                         window.location.href = item.linkUrl
                     }
 
@@ -163,17 +170,25 @@
 
             },
             scrollToForIphone6() {
-                if (isIphone6()) {
+                if (isIphone()) {
+                    this.ios = 'ios'
                     setTimeout(function () {
                         var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
                         window.scrollTo(0, Math.max(scrollHeight - 1, 0));
                     }, 100);
                 }
+                if (isIphone6()) {
+
+                    this.ios = 'is iphone 6'
+
+                    // alert('is iphone 6')
+                }
+
 
             },
-            tick(){
+            tick() {
                 this.remainTime--
-                if(this.remainTime <= 0){
+                if (this.remainTime <= 0) {
                     this.isShowSplash = false
                     this.setLoaded(true)
                     this.setPlayMusic(true)
@@ -184,7 +199,7 @@
                 if (!this.isLoaded) {
                     this.isShowSplash = true
                     this.remainTime = 3
-                    this.time = setInterval(this.tick , 1000)
+                    this.time = setInterval(this.tick, 1000)
 
                     // this.time = setTimeout(() => {
                     //     this.isShowSplash = false
@@ -196,6 +211,50 @@
             handleBlur(e) {
                 this.scrollToForIphone6()
             },
+            handleItemLoaded({index , ref}){
+                if(index === 8 && ref){
+                    const pw = 0.256
+                    const ph = 0.175
+                    const pm = 0.284
+                    // const [vw ,vh] = getViewport()
+                    // alert(vw , vh)
+                    // alert(ref.offsetWidth , ref.offsetHeight)
+                    const inView = elementInViewport(ref)
+                    if(!inView){
+                        const [vw ,vh] = getViewport()
+                        if(vw && vh){
+                            const items = this.$refs.item
+                            const width = pw * vw
+                            const height = ph * vh
+                            // const width = 80
+                            // const height = 90
+                            // alert(width )
+                            // alert(height )
+                            // items.length > 0 && alert("adfset")
+                            items.forEach(f=>{
+                                const  item = $(f.$el.firstChild);
+                                item.width(width)
+                                item.height(height)
+                            })
+
+                            const hcontent = $(this.$refs.hcontent)
+                            hcontent.css('margin-top',pm * vh);
+
+                        }else{
+                            // alert("no v")
+                        }
+                    }
+                }
+            },
+            // adjustView() {
+            //
+            //     setTimeout(() => {
+            //         if(this.items.length === 9){
+            //             alert(this.$refs.item)
+            //         }
+            //     }, 500)
+            //
+            // },
             async init() {
                 try {
                     this.scrollToForIphone6()
@@ -209,7 +268,13 @@
 
                     this.showSplash()
                     await this.getLink()
-                    if(this.openid){
+
+                    // this.$nextTick(() => {
+                    //     this.adjustView()
+                    // })
+
+
+                    if (this.openid) {
                         await this.getUser(this.openid)
                     }
 
@@ -249,43 +314,14 @@
 <style scoped lang="scss">
     @import "../css/common";
     @import "../css/media";
+
     $font-size-base-b: 2rem;
     $font-size-base-s: 1.2rem;
     $b: 1rem;
     $font-family: Hz-Tz;
-    @include all-media(($iphone4), 1, 3) {
-        .sample {
-            font-size: $font-size-base-b -1;
-        }
-        .tip {
-            font-size: $font-size-base-s - 0.4;
-            margin-bottom: $b - 0.6;
-        }
-    }
-
-    @include all-media(($iphone5, $iphone6), 4, 6) {
-        .sample {
-            font-size: $font-size-base-b -0.5;
-        }
-        .tip {
-            font-size: $font-size-base-s - 0.2;
-            margin-bottom: $b - 0.3;
-        }
-    }
 
 
-    @include all-media(($iphone-p, $iphonex), 7, 8) {
-        .sample {
-            font-size: $font-size-base-b;
-        }
-        .tip {
-            font-size: $font-size-base-s;
-            margin-bottom: $b;
-        }
-    }
-
-
-    .home-bg{
+    .home-bg {
         position: fixed;
         left: 0;
         right: 0;
@@ -295,6 +331,7 @@
         height: 100%;
         z-index: 0;
     }
+
     .home-page {
         background-image: url("../assets/view/home.png");
         background-size: 100% 100%;
@@ -321,17 +358,17 @@
             background-size: 100% 100%;
             background-repeat: no-repeat;
             margin-top: 250px;
-            @media screen and (max-height: 667px) {
-                margin-top: 200px;
-            }
+            /*@media screen and (max-height: 667px) {*/
+            /*margin-top: 200px;*/
+            /*}*/
 
-            @media screen and (min-height: 667px) and (max-height: 736px){
-                margin-top: 250px;
-            }
+            /*@media screen and (min-height: 667px) and (max-height: 736px){*/
+            /*margin-top: 250px;*/
+            /*}*/
 
-            @media screen and (min-height: 736px){
-                margin-top: 300px;
-            }
+            /*@media screen and (min-height: 736px){*/
+            /*margin-top: 300px;*/
+            /*}*/
 
             .content-wrap {
                 display: grid;
@@ -351,6 +388,87 @@
                 z-index: 20;
             }
         }
+
+        .home-content {
+            margin-top: 180px;
+        }
+
+        .msg {
+            color: gold;
+            position: absolute;
+            top: 0;
+            left: 50px;
+            z-index: 99999;
+
+            &::before {
+                content: 'moren';
+                color: gold;
+                position: absolute;
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                position: fixed;
+                left: 200px;
+                z-index: 99999;
+            }
+
+        }
+
+        @include range-media(1, 4) {
+            .home-content {
+                margin-top: 180px;
+            }
+            .msg {
+                color: red;
+
+                &::before {
+                    content: '1-4';
+                }
+            }
+        }
+
+        @include use-media($iphone4) {
+            .home-content {
+                margin-top: 160px;
+            }
+
+            .msg {
+                color: salmon;
+
+                &::before {
+                    content: 'iphone4';
+                }
+            }
+        }
+        @include use-media($iphone5, $iphone6) {
+            .home-content {
+                margin-top: 165px;
+            }
+            .msg {
+                color: springgreen;
+
+                &::before {
+                    content: 'iphone5-6';
+                }
+            }
+        }
+
+
+        @include use-media($iphone-p, $iphonex) {
+            .home-content {
+                margin-top: 190px;
+
+            }
+            .msg {
+                color: blue;
+
+                &::before {
+                    content: 'iphonep-x';
+                }
+            }
+        }
+
+
     }
 
 </style>

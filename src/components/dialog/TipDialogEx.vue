@@ -53,6 +53,19 @@
 <style scoped lang="scss">
     @import "../../css/common";
     @import "../../css/media";
+
+    .content{
+        display: flex;
+        flex-direction: column;
+        padding: 2rem 1rem;
+
+        align-items: center;
+        .btn-group{
+            display: flex;
+            margin-top: 1rem;
+            justify-content: space-around;
+        }
+    }
     @include range-media(1,4) {
         .title {
             font-size: 1.5rem;
@@ -75,16 +88,64 @@
         }
     }
 
-    .content{
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 1rem;
-
-        align-items: center;
+    @include range-media(1 , 4){
+        .title {
+            font-size: 3rem;
+        }
         .btn-group{
-            display: flex;
             margin-top: 1rem;
-            justify-content: space-around;
+            &>*{
+                width:12rem;
+            }
         }
     }
+
+    @include range-media(5 , 8){
+        .title {
+            font-size: 3.5rem;
+        }
+        .btn-group{
+            margin-top: 1rem;
+            &>*{
+                width:12rem;
+            }
+        }
+    }
+
+    @include use-media($iphone4){
+        .title {
+            font-size: 1.8rem;
+        }
+        .btn-group{
+            margin-top: 1rem;
+            &>*{
+                width:9rem;
+            }
+        }
+    }
+    @include use-media($iphone5, $iphone6){
+        .title {
+            font-size: 2rem;
+        }
+        .btn-group{
+            margin-top: 1rem;
+            &>*{
+                width:10rem;
+            }
+        }
+    }
+
+
+    @include use-media($iphone-p, $iphonex){
+        .title {
+            font-size: 3rem;
+        }
+        .btn-group{
+            margin-top: 1rem;
+            &>*{
+                width:12rem;
+            }
+        }
+    }
+
 </style>

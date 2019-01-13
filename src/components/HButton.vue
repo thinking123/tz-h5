@@ -27,7 +27,9 @@
         methods: {
             handleClick(e) {
                 // alert('cli')
+                // alert('cli')
                 this.$emit('click', e)
+
             }
         }
     }
@@ -40,12 +42,14 @@
     $bd-gap: -2px;
     .left {
         left: $bd-gap;
-        top: $bd-gap
+        top: $bd-gap;
+        z-index:130;
     }
 
     .right {
         right: $bd-gap;
-        bottom: $bd-gap
+        bottom: $bd-gap;
+        z-index:130;
     }
 
     .wrap {
@@ -55,7 +59,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
+        z-index:130;
         & > * {
 
         }
@@ -76,6 +80,7 @@
             width: 100%;
             left:0;
             position: absolute;
+            z-index:131;
         }
     }
 

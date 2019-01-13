@@ -1,6 +1,6 @@
 <template>
     <base-dialog :visible.sync="showDialog" :is-show-mask="true">
-        <div class="content"   @touchmove="touchMove" >
+        <div class="content"   >
             <div class="title">
                 请输入邀请码
             </div>
@@ -69,15 +69,16 @@
                 // e.preventDefault()
             },
             touchMove(e){
-                // e.stopPropagation();
+                e.stopPropagation();
                 // e.preventDefault()
             }
         }
     }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
     @import "../../css/common";
+    @import "../../css/media";
     .content{
         display: flex;
         flex-direction: column;
@@ -102,6 +103,66 @@
                 /*height: 2rem;*/
             }
 
+        }
+    }
+
+    @include range-media(1 , 4){
+        .title{
+            font-size:2rem;
+        }
+        .btn-group{
+            margin-top: 1rem;
+            &>*{
+                width:8rem;
+            }
+        }
+    }
+
+    @include range-media(5 , 8){
+        .title{
+            font-size:2rem;
+        }
+        .btn-group{
+            margin-top: 1rem;
+            &>*{
+                width:8rem;
+            }
+        }
+    }
+
+    @include use-media($iphone4){
+        .title{
+            font-size:2rem;
+        }
+        .btn-group{
+            margin-top: 0.5rem;
+            &>*{
+                width:6rem;
+            }
+        }
+    }
+    @include use-media($iphone5, $iphone6){
+        .title{
+            font-size:2rem;
+        }
+        .btn-group{
+            margin-top: 1rem;
+            &>*{
+                width:8rem;
+            }
+        }
+    }
+
+
+    @include use-media($iphone-p, $iphonex){
+        .title{
+            font-size:3rem;
+        }
+        .btn-group{
+            margin-top: 1rem;
+            &>*{
+                width:10rem;
+            }
         }
     }
 </style>

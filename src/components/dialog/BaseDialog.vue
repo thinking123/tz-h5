@@ -62,8 +62,8 @@
                 // e.preventDefault()
             },
             touchMove(e){
-                e.stopPropagation();
-                e.preventDefault()
+                // e.stopPropagation();
+                // e.preventDefault()
             }
         },
         // mounted(){
@@ -128,6 +128,7 @@
                     background-size: cover;
                     position: relative;
                     right: -2rem;
+                    z-index: 130;
                 }
             }
             .dialog-body{

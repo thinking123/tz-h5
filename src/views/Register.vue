@@ -32,7 +32,7 @@
             <h-selecter placeholder="座位区:"
                         :value.sync="form.zone" :items="items" @hfocus="handleFocus"
                         @hblur="handleBlur"/>
-            <div class="btn">
+            <div class="btn rigister-btn">
                 <h-button @click="handleSubmit">
                     确认提交
                 </h-button>
@@ -47,7 +47,7 @@
         <!--<div class="error">-->
         <!--{{msg}} : {{count}}-->
         <!--</div>-->
-        <tip-line-dialog title="恭喜您报名成功" tip="获得神秘的礼物一份请您与2019年1月23日在现场点击个人中心领取" :is-show-button="false"
+        <tip-line-dialog title="恭喜您报名成功" tip="获得神秘礼物一份请您与2019年1月23日在现场点击个人中心领取" :is-show-button="false"
                          :visible.sync="isOk"/>
         <tip-line-dialog title="您已报名成功" tip="请去个人中心查看您的报名信息" :visible.sync="showHadCode" @return="handleReturn"/>
         <!--<invitation-success-dialog :visible.sync="isOk"/>-->
@@ -104,7 +104,7 @@
                     userName: '',
                     userPhone: '',
                     userCompany: '',
-                    zone: {value: '海陵区', key: '0'},
+                    zone: {value: '市直', key: '7'},
                     userHead: ''
 
                 },
@@ -151,7 +151,7 @@
                 'register',
             ]),
             scrollToForIphone6() {
-                if (isIphone6()) {
+                if (isIphone()) {
                     // alert('iphone6 scroll')
                     // this.err = 'iphone6 scroll'
                     setTimeout(function () {
@@ -426,7 +426,18 @@
         /*width: initial;*/
         display: flex;
         justify-content: center;
+
+
+    }
+    .btn *{
+        button{
+            z-index: 9 !important;
+        }
     }
 
-
+</style>
+<style>
+    .rigister-btn.btn  *{
+        z-index: 9 !important;
+    }
 </style>

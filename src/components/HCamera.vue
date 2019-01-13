@@ -70,20 +70,20 @@
                 return new File([u8arr], filename, {type:mime});
             },
 
-            async testImage(img) {
-                const [fixedImg , image] = await this.fixDirection(img)
-
-                const formData = new FormData();
-                formData.append("file", new Blob([fixedImg]))
-                // const file = this.$refs.file.files[0]
-                // formData.append("file", fixedImg);
-
-                const url = await uploadFile(formData)
-                if (url) {
-                    this.imgSrc = fixedImg
-                    this.$emit('change', url)
-                }
-            },
+            // async testImage(img) {
+            //     const [fixedImg , image] = await this.fixDirection(img)
+            //
+            //     const formData = new FormData();
+            //     formData.append("file", new Blob([fixedImg]))
+            //     // const file = this.$refs.file.files[0]
+            //     // formData.append("file", fixedImg);
+            //
+            //     const url = await uploadFile(formData)
+            //     if (url) {
+            //         this.imgSrc = fixedImg
+            //         this.$emit('change', url)
+            //     }
+            // },
             async _uploadFile(img) {
                 try {
                     // const formData = new FormData();
@@ -109,7 +109,7 @@
                     formData.append("file", convertImage)
                     // const file = this.$refs.file.files[0]
                     // formData.append("file", fixedImg);
-                    this.imgSrc = fixedImg
+                    // this.imgSrc = fixedImg
                     // alert('load')
                     const url = await uploadFile(formData)
                     // alert(this.$refs.file.files[0].name)

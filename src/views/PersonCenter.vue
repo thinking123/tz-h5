@@ -21,7 +21,7 @@
             <h-card title="我的座位信息" :footer="footer" @click.native="handleToZone">
                 <img :src="siteBg" class="img-str"/>
             </h-card>
-            <div class="btn-group">
+            <div class="btn-group person-center-btn">
                 <h-button @click="handlePrize">
                     我的奖品信息
                 </h-button>
@@ -241,4 +241,9 @@
         }
     }
 
+</style>
+<style>
+    .person-center-btn.btn-group  *{
+        z-index: 9 !important;
+    }
 </style>
