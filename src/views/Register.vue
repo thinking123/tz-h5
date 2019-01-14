@@ -40,7 +40,7 @@
         </div>
 
         <div class="error" v-if="err" slot="error">
-            {{err}} : {{msg}}
+            {{err}}
         </div>
 
 

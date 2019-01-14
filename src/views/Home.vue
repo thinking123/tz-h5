@@ -399,7 +399,7 @@
         }
 
         .home-content {
-            margin-top: 180px;
+            margin-top: 200px;
         }
 
         .msg {
