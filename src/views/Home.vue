@@ -50,6 +50,8 @@
     import InputInvitationCodeDialogEx from "../components/dialog/InputInvitationCodeDialogEx";
     import {getOS, isIphone, isIphone6 , elementInViewport , getViewport} from "../utils/common";
     import $ from 'jquery'
+    import {elementInViewportWithMargin} from "../utils/layout-adjust";
+
     const SPLASHTIME = 3000
     export default {
         name: "Home",
@@ -241,10 +243,34 @@
                             const hcontent = $(this.$refs.hcontent)
                             hcontent.css('margin-top',pm * vh);
 
-                        }else{
-                            // alert("no v")
                         }
+
                     }
+
+                    const hcontent = $(this.$refs.hcontent)
+                    const margin = [0 , 0 , 15 , 0]
+                    let num = 0 , count = 20 , step = 10;
+                    let isInSide = elementInViewportWithMargin(this.$refs.hcontent , margin)
+
+                    console.log('is inside ' , isInSide)
+                    while (!isInSide){
+                        if(num > count++){
+                            break
+                        }
+                        let top = hcontent.css('margin-top')
+                        top = parseFloat(top.replace('px' , ''))
+                        if(!top || top < 100){
+                            break
+                        }
+                        top -= step
+
+                        hcontent.css('margin-top',top);
+                        console.log(`adjust ${count} top : ${top} `)
+                        isInSide = elementInViewportWithMargin(this.$refs.hcontent , margin)
+                    }
+
+
+
                 }
             },
             // adjustView() {
@@ -366,7 +392,7 @@
             background-image: url("../assets/home-border.png");
             background-size: 100% 100%;
             background-repeat: no-repeat;
-            margin-top: 250px;
+            margin-top: 260px;
             /*@media screen and (max-height: 667px) {*/
             /*margin-top: 200px;*/
             /*}*/
