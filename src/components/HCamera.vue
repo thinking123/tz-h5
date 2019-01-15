@@ -9,6 +9,7 @@
     import {uploadFile} from "../utils/http";
     import {mapGetters} from 'vuex'
     import fixOrientation from 'fix-orientation'
+    import {getOS} from "../utils/common";
 
     export default {
         name: "HCamera",
@@ -97,13 +98,19 @@
                     // }
                     // return
 
-
+                    const [isAndorid , isIOS] = getOS()
+                    let convertImage = this.$refs.file.files[0]
+                    let showImage = img
+                    if(isIOS){
+                        console.log("not convert in ios")
+                    }else{
+                        const  [fixedImg , image]  = await this.fixDirection(img)
+                        convertImage = this.base64ToFile(fixedImg , this.$refs.file.files[0].name)
+                        showImage = fixedImg
+                    }
 
                     // const fixedImg = await this.fixDirection(img)
-                    const  [fixedImg , image]  = await this.fixDirection(img)
 
-
-                    const convertImage = this.base64ToFile(fixedImg , this.$refs.file.files[0].name)
 
                     const formData = new FormData();
                     formData.append("file", convertImage)
@@ -114,8 +121,8 @@
                     const url = await uploadFile(formData)
                     // alert(this.$refs.file.files[0].name)
                     if (url) {
-                        console.log(fixedImg)
-                        this.imgSrc = fixedImg
+                        // console.log(showImage)
+                        this.imgSrc = showImage
 
                         // alert(url)
                         this.$emit('change', url)
